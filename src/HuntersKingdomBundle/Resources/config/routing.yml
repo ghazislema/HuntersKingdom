@@ -1,0 +1,3 @@
+hunters_kingdom_homepage:
+    path:     /
+    defaults: { _controller: HuntersKingdomBundle:Default:index }
