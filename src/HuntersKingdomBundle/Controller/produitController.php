@@ -101,7 +101,7 @@ class produitController extends Controller
     /**
      * Deletes a produit entity.
      *
-     * @Route("/{id}", name="produit_delete")
+     * @Route("/{id}/delete", name="produit_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, produit $produit)
@@ -113,19 +113,4 @@ class produitController extends Controller
         return new View("Product Deleted Successfully", Response::HTTP_OK);
     }
 
-    /**
-     * Creates a form to delete a produit entity.
-     *
-     * @param produit $produit The produit entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(produit $produit)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('produit_delete', array('id' => $produit->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 }
