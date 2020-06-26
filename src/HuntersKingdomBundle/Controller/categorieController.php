@@ -2,12 +2,14 @@
 
 namespace HuntersKingdomBundle\Controller;
 
+use FOS\RestBundle\View\View;
 use HuntersKingdomBundle\Entity\categorie;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Categorie controller.
@@ -36,97 +38,89 @@ class categorieController extends Controller
     /**
      * Creates a new categorie entity.
      *
-     * @Route("/new", name="categorie_new")
+     * @Route("/add", name="categorie_add")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
-    {
-        $categorie = new Categorie();
-        $form = $this->createForm('HuntersKingdomBundle\Form\categorieType', $categorie);
-        $form->submit(json_decode($request->getContent(), true));
-
-        if ($form->isValid()) {
+    public function addAction(Request $request)
+        {
+            //récupérer le contenu de la requête envoyé par l'outil postman
+            $data = $request->getContent();
+            //deserialize data: création d'un objet 'produit' à partir des données json envoyées
+            $categorie = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\categorie', 'json');
+            //ajout dans la base
             $em = $this->getDoctrine()->getManager();
             $em->persist($categorie);
             $em->flush();
+            return new View("Categorie Added Successfully", Response::HTTP_OK);
         }
-        return $categorie;
+
+
+
+    /**
+     * Finds and displays a categorie entity.
+     *
+     * @Route("/get/{id}", name="categorie_get")
+     * @Method("GET")
+     */
+    public function getAction(categorie $categorie)
+    {
+        $data=$this->get('jms_serializer')->serialize($categorie,'json');
+        $response=new Response($data);
+        return $response;
     }
 
     /**
      * Finds and displays a categorie entity.
      *
-     * @Route("/{id}", name="categorie_show")
+     * @Route("/getall", name="categorie_getall")
      * @Method("GET")
      */
-    public function showAction(categorie $categorie)
+    public function getAllCategorieAction()
     {
-        $deleteForm = $this->createDeleteForm($categorie);
-
-        return $this->render('categorie/show.html.twig', array(
-            'categorie' => $categorie,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $em=$this->getDoctrine()->getManager();
+        $categorie=$em->getRepository(categorie::class)->findAll();
+        $data=$this->get('jms_serializer')->serialize($categorie,'json');
+        $response=new Response($data);
+        return $response;
     }
 
     /**
      * Displays a form to edit an existing categorie entity.
      *
-     * @Route("/{id}/edit", name="categorie_edit")
+     * @Route("/update/{id}", name="categorie_update")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, categorie $categorie)
+    public function updateAction(Request $request, categorie $categorie)
     {
-        $deleteForm = $this->createDeleteForm($categorie);
-        $editForm = $this->createForm('HuntersKingdomBundle\Form\categorieType', $categorie);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('categorie_edit', array('id' => $categorie->getId()));
+        $em=$this->getDoctrine()->getManager();
+        $categorie=$em->getRepository('HuntersKingdomBundle:categorie')->find($categorie->getId());
+        $data=$request->getContent();
+        $newdata=$this->get('jms_serializer')->deserialize($data,'HuntersKingdomBundle\Entity\categorie','json');
+        if($newdata->getNom() != null) {
+            $categorie->setNom($newdata->getNom());
         }
 
-        return $this->render('categorie/edit.html.twig', array(
-            'categorie' => $categorie,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $em->persist($categorie);
+        $em->flush();
+        return new View("Categorie Modified Successfully", Response::HTTP_OK);
     }
 
     /**
      * Deletes a categorie entity.
      *
-     * @Route("/{id}", name="categorie_delete")
+     * @Route("/delete/{id}", name="categorie_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, categorie $categorie)
     {
-        $form = $this->createDeleteForm($categorie);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($categorie);
+            $em=$this->getDoctrine()->getManager();
+            $p=$em->getRepository('HuntersKingdomBundle:categorie')->find($categorie->getId());
+            $em->remove($p);
             $em->flush();
-        }
+            return new View("categorie Deleted Successfully", Response::HTTP_OK);
 
-        return $this->redirectToRoute('categorie_index');
     }
 
-    /**
-     * Creates a form to delete a categorie entity.
-     *
-     * @param categorie $categorie The categorie entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(categorie $categorie)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('categorie_delete', array('id' => $categorie->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
+
 }
