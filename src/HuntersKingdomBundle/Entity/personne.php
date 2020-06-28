@@ -63,6 +63,16 @@ class personne
      */
     private $adresse;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="event", mappedBy="persones")
+     */
+    private $events;
+
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -121,6 +131,7 @@ class personne
     {
         return $this->prenom;
     }
+
 
     /**
      * Set age

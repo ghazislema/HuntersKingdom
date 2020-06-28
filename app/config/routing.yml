@@ -1,3 +1,11 @@
+hunters_kingdom_categorie:
+    resource: "@HuntersKingdomBundle/Controller/categorieController.php"
+    type:     annotation
+
+hunters_kingdom_event:
+    resource: "@HuntersKingdomBundle/Controller/eventController.php"
+    type:     annotation
+
 hunters_kingdom_produit:
     resource: "@HuntersKingdomBundle/Controller/produitController.php"
     type:     annotation
