@@ -6,6 +6,7 @@ use HuntersKingdomBundle\Entity\threaddetail;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Threaddetail controller.
@@ -24,11 +25,11 @@ class threaddetailController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $threaddetails = $em->getRepository('HuntersKingdomBundle:threaddetail')->findAll();
+        $threaddetail = $em->getRepository('HuntersKingdomBundle:threaddetail')->findAll();
 
-        return $this->render('threaddetail/index.html.twig', array(
-            'threaddetails' => $threaddetails,
-        ));
+        $data=$this->get('jms_serializer')->serialize($threaddetail,'json');
+        $response = new Response($data);
+        return $response;
     }
 
     /**
@@ -39,22 +40,12 @@ class threaddetailController extends Controller
      */
     public function newAction(Request $request)
     {
-        $threaddetail = new Threaddetail();
-        $form = $this->createForm('HuntersKingdomBundle\Form\threaddetailType', $threaddetail);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($threaddetail);
-            $em->flush();
-
-            return $this->redirectToRoute('threaddetail_show', array('id' => $threaddetail->getId()));
-        }
-
-        return $this->render('threaddetail/new.html.twig', array(
-            'threaddetail' => $threaddetail,
-            'form' => $form->createView(),
-        ));
+        $data = $request->getContent();
+        $threaddetail = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\threaddetail', 'json');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($threaddetail);
+        $em->flush();
+        return new View("ThreadDetail Added Successfully", Response::HTTP_OK);
     }
 
     /**
@@ -65,12 +56,9 @@ class threaddetailController extends Controller
      */
     public function showAction(threaddetail $threaddetail)
     {
-        $deleteForm = $this->createDeleteForm($threaddetail);
-
-        return $this->render('threaddetail/show.html.twig', array(
-            'threaddetail' => $threaddetail,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $data=$this->get('jms_serializer')->serialize($threaddetail,'json');
+        $response=new Response($data);
+        return $response;
     }
 
     /**
@@ -81,21 +69,12 @@ class threaddetailController extends Controller
      */
     public function editAction(Request $request, threaddetail $threaddetail)
     {
-        $deleteForm = $this->createDeleteForm($threaddetail);
-        $editForm = $this->createForm('HuntersKingdomBundle\Form\threaddetailType', $threaddetail);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('threaddetail_edit', array('id' => $threaddetail->getId()));
-        }
-
-        return $this->render('threaddetail/edit.html.twig', array(
-            'threaddetail' => $threaddetail,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $em=$this->getDoctrine()->getManager();
+        $data=$request->getContent();
+        $newdata=$this->get('jms_serializer')->deserialize($data,'HuntersKingdomBundle\Entity\threaddetail','json');
+        $em->persist($newdata);
+        $em->flush();
+        return new View("Threaddetail Modified Successfully", Response::HTTP_OK);
     }
 
     /**
@@ -106,31 +85,12 @@ class threaddetailController extends Controller
      */
     public function deleteAction(Request $request, threaddetail $threaddetail)
     {
-        $form = $this->createDeleteForm($threaddetail);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($threaddetail);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('threaddetail_index');
+        $em=$this->getDoctrine()->getManager();
+        $p=$em->getRepository('HuntersKingdomBundle:threaddetail')->find($threaddetail->getId());
+        $em->remove($p);
+        $em->flush();
+        return new View("ThreadDetail Deleted Successfully", Response::HTTP_OK);
     }
 
-    /**
-     * Creates a form to delete a threaddetail entity.
-     *
-     * @param threaddetail $threaddetail The threaddetail entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(threaddetail $threaddetail)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('threaddetail_delete', array('id' => $threaddetail->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
+
 }
