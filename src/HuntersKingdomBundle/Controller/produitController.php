@@ -7,8 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
 
@@ -93,8 +91,8 @@ class produitController extends Controller
         if($newdata->getCategorie() != null) {
             $produit->setCategorie($newdata->getCategorie());
         }
-        if($newdata->getDateAjout() != null) {
-            $produit->setDateAjout($newdata->getDateAjout());
+        if($newdata->getAddDate() != null) {
+            $produit->setAddDate($newdata->getAddDate());
         }
         $em->persist($produit);
         $em->flush();
