@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Threaddetails list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Threadid</th>
+                <th>Comment</th>
+                <th>Writer</th>
+                <th>Upvote</th>
+                <th>Downvote</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for threaddetail in threaddetails %}
+            <tr>
+                <td><a href="{{ path('threaddetail_show', { 'id': threaddetail.id }) }}">{{ threaddetail.id }}</a></td>
+                <td>{{ threaddetail.threadid }}</td>
+                <td>{{ threaddetail.comment }}</td>
+                <td>{{ threaddetail.writer }}</td>
+                <td>{{ threaddetail.upvote }}</td>
+                <td>{{ threaddetail.downvote }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('threaddetail_show', { 'id': threaddetail.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('threaddetail_edit', { 'id': threaddetail.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('threaddetail_new') }}">Create a new threaddetail</a>
+        </li>
+    </ul>
+{% endblock %}
