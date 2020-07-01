@@ -93,6 +93,9 @@ class produitController extends Controller
         if($newdata->getCategorie() != null) {
             $produit->setCategorie($newdata->getCategorie());
         }
+        if($newdata->getDateAjout() != null) {
+            $produit->setDateAjout($newdata->getDateAjout());
+        }
         $em->persist($produit);
         $em->flush();
         return new View("Product Modified Successfully", Response::HTTP_OK);
