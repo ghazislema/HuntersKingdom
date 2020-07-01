@@ -59,6 +59,13 @@ class produit
 
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="dateAjout", type="string", length=255)
+     */
+    private $dateAjout;
+
+    /**
      * Get id
      *
      * @return int
@@ -162,6 +169,22 @@ class produit
     public function setPrix($prix)
     {
         $this->prix = $prix;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateAjout()
+    {
+        return $this->dateAjout;
+    }
+
+    /**
+     * @param string $dateAjout
+     */
+    public function setDateAjout($dateAjout)
+    {
+        $this->dateAjout = $dateAjout;
     }
 
 
