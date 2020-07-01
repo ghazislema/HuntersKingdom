@@ -1,3 +1,15 @@
+hunters_kingdom_threaddetail:
+    resource: "@HuntersKingdomBundle/Controller/threaddetailController.php"
+    type:     annotation
+
+hunters_kingdom_thread:
+    resource: "@HuntersKingdomBundle/Controller/threadController.php"
+    type:     annotation
+
+hunters_kingdom_users:
+    resource: "@HuntersKingdomBundle/Controller/usersController.php"
+    type:     annotation
+
 hunters_kingdom_categorie:
     resource: "@HuntersKingdomBundle/Controller/categorieController.php"
     type:     annotation
