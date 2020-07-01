@@ -85,11 +85,11 @@ class productController extends Controller
         if($newdata->getCategorie() != null) {
             $produit->setCategorie($newdata->getCategorie());
         }
-        if($newdata->getAddDate() != null) {
-            $produit->setAddDate($newdata->getAddDate());
+        if($newdata->getDate() != null) {
+            $produit->setDate($newdata->getDate());
         }
-        if($newdata->getUrlImage() != null) {
-            $produit->setUrlImage($newdata->getUrlImage());
+        if($newdata->getImage() != null) {
+            $produit->setImage($newdata->getImage());
         }
         if($newdata->getType() != null) {
             $produit->setType($newdata->getType());

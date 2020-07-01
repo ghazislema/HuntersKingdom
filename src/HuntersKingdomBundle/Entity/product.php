@@ -52,9 +52,9 @@ class product
     /**
      * @var string
      *
-     * @ORM\Column(name="urlImage", type="string", length=255)
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
-    private $urlImage;
+    private $image;
 
     /**
      * @var string
@@ -73,9 +73,9 @@ class product
     /**
      * @var string
      *
-     * @ORM\Column(name="addDate", type="string", length=255)
+     * @ORM\Column(name="date", type="string", length=255, nullable=true)
      */
-    private $addDate;
+    private $date;
 
 
     /**
@@ -185,27 +185,27 @@ class product
     }
 
     /**
-     * Set urlImage
+     * Set image
      *
-     * @param string $urlImage
+     * @param string $image
      *
      * @return product
      */
-    public function setUrlImage($urlImage)
+    public function setImage($image)
     {
-        $this->urlImage = $urlImage;
+        $this->image = $image;
 
         return $this;
     }
 
     /**
-     * Get urlImage
+     * Get image
      *
      * @return string
      */
-    public function getUrlImage()
+    public function getImage()
     {
-        return $this->urlImage;
+        return $this->image;
     }
 
     /**
@@ -257,27 +257,27 @@ class product
     }
 
     /**
-     * Set addDate
+     * Set date
      *
-     * @param string $addDate
+     * @param string $date
      *
      * @return product
      */
-    public function setAddDate($addDate)
+    public function setDate($date)
     {
-        $this->addDate = $addDate;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get addDate
+     * Get date
      *
      * @return string
      */
-    public function getAddDate()
+    public function getDate()
     {
-        return $this->addDate;
+        return $this->date;
     }
 }
 
