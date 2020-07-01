@@ -16,15 +16,15 @@ use FOS\RestBundle\View\View;
 /**
  * Produit controller.
  *
- * @Route("produit")
+ *
  */
 class produitController extends Controller
 {
     /**
      * Lists all produit entities.
      *
-     * @Route("/all", name="produit_index")
-     * @Method("GET")
+     * @Route("/api/produits", name="produit_index")
+     * @Method({"GET"})
      */
     public function indexAction()
     {
@@ -40,7 +40,7 @@ class produitController extends Controller
     /**
      * Creates a new produit entity.
      *
-     * @Route("/new", name="produit_new")
+     * @Route("/api/produits/new", name="produit_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -59,8 +59,8 @@ class produitController extends Controller
     /**
      * Finds and displays a produit entity.
      *
-     * @Route("/{reference}", name="produit_show")
-     * @Method("GET")
+     * @Route("/api/produits/{reference}", name="produit_show")
+     * @Method({"GET"})
      */
     public function showAction(produit $produit)
     {
@@ -72,7 +72,7 @@ class produitController extends Controller
     /**
      * Displays a form to edit an existing produit entity.
      *
-     * @Route("/{reference}/edit", name="produit_edit")
+     * @Route("/api/produits/{reference}/edit", name="produit_edit")
      * @Method({"PUT", "POST"})
      */
     public function editAction(Request $request, produit $produit)
@@ -101,8 +101,8 @@ class produitController extends Controller
     /**
      * Deletes a produit entity.
      *
-     * @Route("/{id}/delete", name="produit_delete")
-     * @Method("DELETE")
+     * @Route("/api/produits{id}/delete", name="produit_delete")
+     * @Method({"DELETE"})
      */
     public function deleteAction(Request $request, produit $produit)
     {
