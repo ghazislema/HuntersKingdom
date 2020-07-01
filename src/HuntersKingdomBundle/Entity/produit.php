@@ -61,9 +61,9 @@ class produit
     /**
      * @var string
      *
-     * @ORM\Column(name="dateAjout", type="string", length=255)
+     * @ORM\Column(name="addDate", type="string", length=255)
      */
-    private $dateAjout;
+    private $addDate;
 
     /**
      * Get id
@@ -174,18 +174,21 @@ class produit
     /**
      * @return string
      */
-    public function getDateAjout()
+    public function getAddDate()
     {
-        return $this->dateAjout;
+        return $this->addDate;
     }
 
     /**
-     * @param string $dateAjout
+     * @param string $addDate
      */
-    public function setDateAjout($dateAjout)
+    public function setAddDate($addDate)
     {
-        $this->dateAjout = $dateAjout;
+        $this->addDate = $addDate;
     }
+
+
+
 
 
 
