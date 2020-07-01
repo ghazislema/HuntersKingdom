@@ -2,10 +2,12 @@
 
 namespace HuntersKingdomBundle\Controller;
 
+use FOS\RestBundle\View\View;
 use HuntersKingdomBundle\Entity\event;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Event controller.
@@ -34,68 +36,79 @@ class eventController extends Controller
     /**
      * Creates a new event entity.
      *
-     * @Route("/new", name="event_new")
+     * @Route("/add", name="event_add")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function addAction(Request $request)
     {
-        $event = new Event();
-        $form = $this->createForm('HuntersKingdomBundle\Form\eventType', $event);
-        $form->handleRequest($request);
+        //récupérer le contenu de la requête envoyé par l'outil postman
+        $data = $request->getContent();
+        //deserialize data: création d'un objet 'produit' à partir des données json envoyées
+        $event = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\event', 'json');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($event);
-            $em->flush();
-
-            return $this->redirectToRoute('event_show', array('id' => $event->getId()));
-        }
-
-        return $this->render('event/new.html.twig', array(
-            'event' => $event,
-            'form' => $form->createView(),
-        ));
+        //ajout dans la base
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($event);
+        $em->flush();
+        return new View("Event Added Successfully", Response::HTTP_OK);
     }
 
     /**
      * Finds and displays a event entity.
      *
-     * @Route("/{id}", name="event_show")
+     * @Route("/get/{id}", name="event_get")
      * @Method("GET")
      */
-    public function showAction(event $event)
+    public function getAction(event $event)
     {
-        $deleteForm = $this->createDeleteForm($event);
-
-        return $this->render('event/show.html.twig', array(
-            'event' => $event,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $data=$this->get('jms_serializer')->serialize($event,'json');
+        $response=new Response($data);
+        return $response;
     }
 
     /**
      * Displays a form to edit an existing event entity.
      *
-     * @Route("/{id}/edit", name="event_edit")
+     * @Route("/update/{id}", name="event_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, event $event)
+    public function updateAction(Request $request, event $event)
     {
-        $deleteForm = $this->createDeleteForm($event);
-        $editForm = $this->createForm('HuntersKingdomBundle\Form\eventType', $event);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('event_edit', array('id' => $event->getId()));
+        $em=$this->getDoctrine()->getManager();
+        $event=$em->getRepository('HuntersKingdomBundle:event')->find($event->getId());
+        $data=$request->getContent();
+        $newdata=$this->get('jms_serializer')->deserialize($data,'HuntersKingdomBundle\Entity\event','json');
+        if($newdata->getNom() != null) {
+            $event->setNom($newdata->geNom());
+        }
+        if($newdata->getType() != null) {
+            $event->setType($newdata->getType());
+        }
+        if($newdata->getadresse() != null) {
+            $event->setAdresse($newdata->getadresse());
+        }
+        if($newdata->getLatitude() != null) {
+            $event->setLatitude($newdata->getLatitude());
+        }
+        if($newdata->getLangitude() != null) {
+            $event->setLangitude($newdata->getLangitude());
+        }
+        if($newdata->getDateDebut() != null) {
+            $event->setDateDebut($newdata->getDateDebut());
+        }
+        if($newdata->getDateFin() != null) {
+            $event->setDateFin($newdata->getDateFin());
+        }
+        if($newdata->getNbrParticipent() != null) {
+            $event->setNbrParticipent($newdata->getNbrParticipent());
+        }
+        if($newdata->getPlaceDispo() != null) {
+            $event->setPlaceDispo($newdata->getPlaceDispo());
         }
 
-        return $this->render('event/edit.html.twig', array(
-            'event' => $event,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $em->persist($event);
+        $em->flush();
+        return new View("Event Modified Successfully", Response::HTTP_OK);
     }
 
     /**
