@@ -39,7 +39,7 @@ class eventController extends Controller
      * @Route("/add", name="event_add")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+        public function  addAction(Request $request)
     {
         //récupérer le contenu de la requête envoyé par l'outil postman
         $data = $request->getContent();
@@ -68,17 +68,17 @@ class eventController extends Controller
     /**
      * Displays a form to edit an existing event entity.
      *
-     * @Route("/addd/{id}", name="event_edit")
+     * @Route("/update/{id}", name="event_edit")
      * @Method({"GET", "POST"})
      */
-    public function addAction(Request $request, event $event)
+    public function uodateAction(Request $request, event $event)
     {
         $em=$this->getDoctrine()->getManager();
         $event=$em->getRepository('HuntersKingdomBundle:event')->find($event->getId());
         $data=$request->getContent();
         $newdata=$this->get('jms_serializer')->deserialize($data,'HuntersKingdomBundle\Entity\event','json');
         if($newdata->getNom() != null) {
-            $event->setNom($newdata->geNom());
+            $event->setNom($newdata->getNom());
         }
         if($newdata->getType() != null) {
             $event->setType($newdata->getType());
@@ -113,22 +113,16 @@ class eventController extends Controller
     /**
      * Deletes a event entity.
      *
-     * @Route("/{id}", name="event_delete")
+     * @Route("/delete/{id}", name="event_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, event $event)
     {
-        $form = $this->createDeleteForm($event);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $p = $em->getRepository('HuntersKingdomBundle:event')->find($event->getId());
+        $em->remove($p);
+        $em->flush();
+        return new View("Event Deleted Successfully", Response::HTTP_OK);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($event);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('event_index');
     }
-
-
 }
