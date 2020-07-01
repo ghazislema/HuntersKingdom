@@ -3,6 +3,7 @@
 namespace HuntersKingdomBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * event
@@ -52,14 +53,15 @@ class event
     /**
      * @var string
      *
-     * @ORM\Column(name="langitude", type="string", length=255)
+     * @ORM\Column(name="langitude", type="string", length=255, )
      */
     private $langitude;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_debut", type="datetime")
+     * @ORM\Column(name="date_debut", type="datetime" )
+     * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
      */
     private $dateDebut;
 
@@ -67,6 +69,7 @@ class event
      * @var \DateTime
      *
      * @ORM\Column(name="date_fin", type="datetime")
+     * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
      */
     private $dateFin;
 
