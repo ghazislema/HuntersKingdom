@@ -2,35 +2,27 @@
 
 namespace HuntersKingdomBundle\Controller;
 
-use HuntersKingdomBundle\Entity\produit;
+use FOS\RestBundle\View\View;
+use HuntersKingdomBundle\Entity\product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Response;
-use FOS\RestBundle\View\View;
 
-
-/**
- * Produit controller.
- *
- * @Route("produit")
- */
-class produitController extends Controller
+class productController extends Controller
 {
     /**
      * Lists all produit entities.
      *
-     * @Route("/all", name="produit_index")
-     * @Method("GET")
+     * @Route("/api/produits", name="produit_index")
+     * @Method({"GET"})
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $produits = $em->getRepository('HuntersKingdomBundle:produit')->findAll();
+        $produits = $em->getRepository('HuntersKingdomBundle:product')->findAll();
 
         $data=$this->get('jms_serializer')->serialize($produits,'json');
         $response = new Response($data);
@@ -40,15 +32,15 @@ class produitController extends Controller
     /**
      * Creates a new produit entity.
      *
-     * @Route("/new", name="produit_new")
-     * @Method({"GET", "POST"})
+     * @Route("/api/produits/new", name="produit_new")
+     * @Method({"POST"})
      */
     public function newAction(Request $request)
     {
         //récupérer le contenu de la requête envoyé par l'outil postman
         $data = $request->getContent();
         //deserialize data: création d'un objet 'produit' à partir des données json envoyées
-        $produit = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\produit', 'json');
+        $produit = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\product', 'json');
         //ajout dans la base
         $em = $this->getDoctrine()->getManager();
         $em->persist($produit);
@@ -59,10 +51,10 @@ class produitController extends Controller
     /**
      * Finds and displays a produit entity.
      *
-     * @Route("/{reference}", name="produit_show")
-     * @Method("GET")
+     * @Route("/api/produits/{id}", name="produit_show")
+     * @Method({"GET"})
      */
-    public function showAction(produit $produit)
+    public function showAction(product $produit)
     {
         $data=$this->get('jms_serializer')->serialize($produit,'json');
         $response=new Response($data);
@@ -72,15 +64,15 @@ class produitController extends Controller
     /**
      * Displays a form to edit an existing produit entity.
      *
-     * @Route("/{reference}/edit", name="produit_edit")
-     * @Method({"PUT", "POST"})
+     * @Route("/api/produits/{id}/edit", name="produit_edit")
+     * @Method({"PUT"})
      */
-    public function editAction(Request $request, produit $produit)
+    public function editAction(Request $request, product $produit)
     {
         $em=$this->getDoctrine()->getManager();
-        $produit=$em->getRepository('HuntersKingdomBundle:produit')->find($produit->getId());
+        $produit=$em->getRepository('HuntersKingdomBundle:product')->find($produit->getId());
         $data=$request->getContent();
-        $newdata=$this->get('jms_serializer')->deserialize($data,'HuntersKingdomBundle\Entity\produit','json');
+        $newdata=$this->get('jms_serializer')->deserialize($data,'HuntersKingdomBundle\Entity\product','json');
         if($newdata->getPrix() != null) {
             $produit->setPrix($newdata->getPrix());
         }
@@ -93,6 +85,15 @@ class produitController extends Controller
         if($newdata->getCategorie() != null) {
             $produit->setCategorie($newdata->getCategorie());
         }
+        if($newdata->getDate() != null) {
+            $produit->setDate($newdata->getDate());
+        }
+        if($newdata->getImage() != null) {
+            $produit->setImage($newdata->getImage());
+        }
+        if($newdata->getType() != null) {
+            $produit->setType($newdata->getType());
+        }
         $em->persist($produit);
         $em->flush();
         return new View("Product Modified Successfully", Response::HTTP_OK);
@@ -101,16 +102,15 @@ class produitController extends Controller
     /**
      * Deletes a produit entity.
      *
-     * @Route("/{id}/delete", name="produit_delete")
-     * @Method("DELETE")
+     * @Route("/api/produits/{id}/delete", name="produit_delete")
+     * @Method({"DELETE"})
      */
-    public function deleteAction(Request $request, produit $produit)
+    public function deleteAction(Request $request, product $produit)
     {
         $em=$this->getDoctrine()->getManager();
-        $p=$em->getRepository('HuntersKingdomBundle:produit')->find($produit->getId());
+        $p=$em->getRepository('HuntersKingdomBundle:product')->find($produit->getId());
         $em->remove($p);
         $em->flush();
         return new View("Product Deleted Successfully", Response::HTTP_OK);
     }
-
 }

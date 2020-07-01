@@ -37,6 +37,26 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
 
+# Nelmio CORS Configuration
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: []
+        allow_headers: []
+        allow_methods: []
+        expose_headers: []
+        max_age: 0
+        hosts: []
+        origin_regex: false
+    paths:
+        '^/api/':
+            allow_origin: ['*']
+            allow_headers: ['*']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+            max_age: 3600
+
+
+
 # Doctrine Configuration
 doctrine:
     dbal:
@@ -70,24 +90,6 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: false
-
-# Nelmio CORS Configuration
-nelmio_cors:
-    defaults:
-        allow_credentials: false
-        allow_origin: []
-        allow_headers: []
-        allow_methods: []
-        expose_headers: []
-        max_age: 0
-        hosts: []
-        origin_regex: false
-    paths:
-        '^/api/':
-            allow_origin: ['*']
-            allow_headers: ['*']
-            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
-            max_age: 3600
 
 
 # FOSRest Configuration

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Threads list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Upvote</th>
+                <th>Downvote</th>
+                <th>Isvalidated</th>
+                <th>Topic</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for thread in threads %}
+            <tr>
+                <td><a href="{{ path('thread_show', { 'id': thread.id }) }}">{{ thread.id }}</a></td>
+                <td>{{ thread.title }}</td>
+                <td>{{ thread.description }}</td>
+                <td>{{ thread.upvote }}</td>
+                <td>{{ thread.downvote }}</td>
+                <td>{{ thread.isValidated }}</td>
+                <td>{{ thread.topic }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('thread_show', { 'id': thread.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('thread_edit', { 'id': thread.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('thread_new') }}">Create a new thread</a>
+        </li>
+    </ul>
+{% endblock %}

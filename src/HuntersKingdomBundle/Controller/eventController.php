@@ -39,16 +39,15 @@ class eventController extends Controller
      * @Route("/add", name="event_add")
      * @Method({"GET", "POST"})
      */
-    public function addAction(Request $request)
+    public function newAction(Request $request)
     {
         //récupérer le contenu de la requête envoyé par l'outil postman
         $data = $request->getContent();
         //deserialize data: création d'un objet 'produit' à partir des données json envoyées
-        $event = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\event', 'json');
-
+        $produit = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\event', 'json');
         //ajout dans la base
         $em = $this->getDoctrine()->getManager();
-        $em->persist($event);
+        $em->persist($produit);
         $em->flush();
         return new View("Event Added Successfully", Response::HTTP_OK);
     }
@@ -69,10 +68,10 @@ class eventController extends Controller
     /**
      * Displays a form to edit an existing event entity.
      *
-     * @Route("/update/{id}", name="event_edit")
+     * @Route("/addd/{id}", name="event_edit")
      * @Method({"GET", "POST"})
      */
-    public function updateAction(Request $request, event $event)
+    public function addAction(Request $request, event $event)
     {
         $em=$this->getDoctrine()->getManager();
         $event=$em->getRepository('HuntersKingdomBundle:event')->find($event->getId());
@@ -131,19 +130,5 @@ class eventController extends Controller
         return $this->redirectToRoute('event_index');
     }
 
-    /**
-     * Creates a form to delete a event entity.
-     *
-     * @param event $event The event entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(event $event)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('event_delete', array('id' => $event->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
+
 }
