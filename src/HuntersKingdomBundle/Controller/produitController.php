@@ -39,7 +39,7 @@ class produitController extends Controller
      * Creates a new produit entity.
      *
      * @Route("/api/produits/new", name="produit_new")
-     * @Method({"GET", "POST"})
+     * @Method({"POST"})
      */
     public function newAction(Request $request)
     {
@@ -57,7 +57,7 @@ class produitController extends Controller
     /**
      * Finds and displays a produit entity.
      *
-     * @Route("/api/produits/{reference}", name="produit_show")
+     * @Route("/api/produits/{id}", name="produit_show")
      * @Method({"GET"})
      */
     public function showAction(produit $produit)
@@ -70,8 +70,8 @@ class produitController extends Controller
     /**
      * Displays a form to edit an existing produit entity.
      *
-     * @Route("/api/produits/{reference}/edit", name="produit_edit")
-     * @Method({"PUT", "POST"})
+     * @Route("/api/produits/{id}/edit", name="produit_edit")
+     * @Method({"PUT"})
      */
     public function editAction(Request $request, produit $produit)
     {
@@ -102,7 +102,7 @@ class produitController extends Controller
     /**
      * Deletes a produit entity.
      *
-     * @Route("/api/produits{id}/delete", name="produit_delete")
+     * @Route("/api/produits/{id}/delete", name="produit_delete")
      * @Method({"DELETE"})
      */
     public function deleteAction(Request $request, produit $produit)
