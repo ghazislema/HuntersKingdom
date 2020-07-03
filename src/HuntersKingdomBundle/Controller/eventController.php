@@ -3,6 +3,7 @@
 namespace HuntersKingdomBundle\Controller;
 
 use FOS\RestBundle\View\View;
+use HuntersKingdomBundle\Entity\categorie;
 use HuntersKingdomBundle\Entity\event;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -108,6 +109,20 @@ class eventController extends Controller
         $em->persist($event);
         $em->flush();
         return new View("Event Modified Successfully", Response::HTTP_OK);
+    }
+    /**
+     * Finds and displays a event entity.
+     *
+     * @Route("/getall", name="event_getall")
+     * @Method("GET")
+     */
+    public function getAllEventAction()
+    {
+        $em=$this->getDoctrine()->getManager();
+        $event=$em->getRepository(event::class)->findAll();
+        $data=$this->get('jms_serializer')->serialize($event,'json');
+        $response=new Response($data);
+        return $response;
     }
 
     /**
