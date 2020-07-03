@@ -99,6 +99,9 @@ class categorieController extends Controller
         if($newdata->getNom() != null) {
             $categorie->setNom($newdata->getNom());
         }
+        if($newdata->getDescription!= null) {
+            $categorie->setDescription($newdata->getDescription());
+        }
 
         $em->persist($categorie);
         $em->flush();
