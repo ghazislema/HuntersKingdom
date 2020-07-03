@@ -85,6 +85,8 @@ class product
     private $quantite;
 
 
+
+
     /**
      * Get id
      *
@@ -302,6 +304,7 @@ class product
     {
         $this->quantite = $quantite;
     }
+
 
 
 }
