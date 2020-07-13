@@ -94,9 +94,6 @@ class productController extends Controller
         if($newdata->getType() != null) {
             $produit->setType($newdata->getType());
         }
-        if($newdata->getQuantite() != null) {
-            $produit->setQuantite($newdata->getQuantite());
-        }
         $em->persist($produit);
         $em->flush();
         return new View("Product Modified Successfully", Response::HTTP_OK);
