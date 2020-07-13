@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Overwatch</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ overwatch.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ overwatch.type }}</td>
+            </tr>
+            <tr>
+                <th>Subjectid</th>
+                <td>{{ overwatch.subjectId }}</td>
+            </tr>
+            <tr>
+                <th>Reportnb</th>
+                <td>{{ overwatch.reportNb }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('overwatch_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('overwatch_edit', { 'id': overwatch.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
