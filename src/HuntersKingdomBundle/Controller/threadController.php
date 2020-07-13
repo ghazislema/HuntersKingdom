@@ -12,14 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Thread controller.
  *
- * @Route("thread")
  */
 class threadController extends Controller
 {
     /**
      * Lists all thread entities.
      *
-     * @Route("/", name="thread_index")
+     * @Route("/api/threads", name="thread_index")
      * @Method("GET")
      */
     public function indexAction()
