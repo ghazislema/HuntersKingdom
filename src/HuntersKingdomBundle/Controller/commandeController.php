@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\View\View;
 use HuntersKingdomBundle\Entity\product;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\Post;
+
 
 
 class commandeController extends Controller
@@ -41,11 +44,12 @@ class commandeController extends Controller
     {
         //récupérer le contenu de la requête envoyé par l'outil postman
         $data = $request->getContent();
-        //deserialize data: création d'un objet 'produit' à partir des données json envoyées
+        //deserialize data: création d'un objet 'commande' à partir des données json envoyées
         $commande = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\commande', 'json');
         //ajout dans la base
         $em = $this->getDoctrine()->getManager();
-        $em->persist($commande);
+        $x = $em->merge($commande);
+        $em->persist($x);
         $em->flush();
         return new View("Commande Added Successfully", Response::HTTP_OK);
     }
@@ -94,6 +98,21 @@ class commandeController extends Controller
         return new View("Commande Deleted Successfully", Response::HTTP_OK);
     }
 
+    /**
+     * search last entity.
+     * @Get("/api/commande")
+     *
+     */
+    public function searchLastCmdNumAction()
+    {
+        $em = $this->getDoctrine()->getManager();
 
+        $commandes = $em->getRepository('HuntersKingdomBundle:commande')->findBy(array(),array('id'=>'DESC'),1,0);
+
+
+        $data=$this->get('jms_serializer')->serialize($commandes[0],'json');
+        $response = new Response($data);
+        return $response;
+    }
 
 }
