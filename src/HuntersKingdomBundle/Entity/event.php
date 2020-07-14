@@ -46,21 +46,21 @@ class event
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="string", length=255)
+     * @ORM\Column(name="latitude", type="string", length=255, nullable=true)
      */
     private $latitude;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="langitude", type="string", length=255, )
+     * @ORM\Column(name="langitude", type="string", length=255, nullable=true)
      */
     private $langitude;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_debut", type="datetime" )
+     * @ORM\Column(name="date_debut", type="datetime" , nullable=true)
      * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
      */
     private $dateDebut;
@@ -68,7 +68,7 @@ class event
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_fin", type="datetime")
+     * @ORM\Column(name="date_fin", type="datetime", nullable=true)
      * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
      */
     private $dateFin;
@@ -83,12 +83,12 @@ class event
     /**
      * @var int
      *
-     * @ORM\Column(name="placeDispo", type="integer")
+     * @ORM\Column(name="placeDispo", type="integer", nullable=true)
      */
     private $placeDispo;
     /**
      *
-     * @ORM\ManyToOne(targetEntity="categorie")
+     * @ORM\ManyToOne(targetEntity="categorie", cascade={"persist"})
      * @ORM\JoinColumn(name="categorie_id",referencedColumnName="id")
      */
 
@@ -98,6 +98,8 @@ class event
      * @ORM\ManyToMany(targetEntity="HuntersKingdomBundle\Entity\personne", inversedBy="events")
      * @ORM\JoinTable(name="persone_event")
      */
+
+
     private $persones;
 
     public function __construct()

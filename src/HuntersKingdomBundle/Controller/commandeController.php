@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\View\View;
 use HuntersKingdomBundle\Entity\product;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\Post;
+
 
 
 class commandeController extends Controller
@@ -95,6 +98,21 @@ class commandeController extends Controller
         return new View("Commande Deleted Successfully", Response::HTTP_OK);
     }
 
+    /**
+     * search last entity.
+     * @Get("/api/commande")
+     *
+     */
+    public function searchLastCmdNumAction()
+    {
+        $em = $this->getDoctrine()->getManager();
 
+        $commandes = $em->getRepository('HuntersKingdomBundle:commande')->findBy(array(),array('id'=>'DESC'),1,0);
+
+
+        $data=$this->get('jms_serializer')->serialize($commandes[0],'json');
+        $response = new Response($data);
+        return $response;
+    }
 
 }

@@ -3,6 +3,7 @@
 namespace HuntersKingdomBundle\Controller;
 
 use FOS\RestBundle\View\View;
+use HuntersKingdomBundle\Entity\categorie;
 use HuntersKingdomBundle\Entity\event;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -44,7 +45,9 @@ class eventController extends Controller
         //récupérer le contenu de la requête envoyé par l'outil postman
         $data = $request->getContent();
         //deserialize data: création d'un objet 'produit' à partir des données json envoyées
+        dump($data);
         $produit = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\event', 'json');
+        //dump($produit);die;
         //ajout dans la base
         $em = $this->getDoctrine()->getManager();
         $em->persist($produit);
@@ -71,7 +74,7 @@ class eventController extends Controller
      * @Route("/update/{id}", name="event_edit")
      * @Method({"GET", "POST"})
      */
-    public function uodateAction(Request $request, event $event)
+    public function updateAction(Request $request, event $event)
     {
         $em=$this->getDoctrine()->getManager();
         $event=$em->getRepository('HuntersKingdomBundle:event')->find($event->getId());
@@ -108,6 +111,20 @@ class eventController extends Controller
         $em->persist($event);
         $em->flush();
         return new View("Event Modified Successfully", Response::HTTP_OK);
+    }
+    /**
+     * Finds and displays a event entity.
+     *
+     * @Route("/getall", name="event_getall")
+     * @Method("GET")
+     */
+    public function getAllEventAction()
+    {
+        $em=$this->getDoctrine()->getManager();
+        $event=$em->getRepository(event::class)->findAll();
+        $data=$this->get('jms_serializer')->serialize($event,'json');
+        $response=new Response($data);
+        return $response;
     }
 
     /**
