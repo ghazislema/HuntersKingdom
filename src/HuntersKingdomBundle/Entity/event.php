@@ -60,7 +60,7 @@ class event
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_debut", type="datetime" )
+     * @ORM\Column(name="date_debut", type="datetime" , nullable=true)
      * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
      */
     private $dateDebut;
@@ -68,7 +68,7 @@ class event
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_fin", type="datetime")
+     * @ORM\Column(name="date_fin", type="datetime", nullable=true)
      * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
      */
     private $dateFin;
