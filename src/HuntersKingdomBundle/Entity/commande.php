@@ -2,8 +2,12 @@
 
 namespace HuntersKingdomBundle\Entity;
 
+
+use JMS\Serializer\Annotation as Serializer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+
+
 
 /**
  * commande
@@ -58,7 +62,7 @@ class commande
     private $isValid = 'false';
 
     /**
-     * @ORM\ManyToMany(targetEntity="product", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="product", cascade={"persist", "merge"})
      */
     private $products;
 
@@ -74,7 +78,9 @@ class commande
     public function addProducts(product $product)
     {
         // Ici, on utilise l'ArrayCollection vraiment comme un tableau, avec la syntaxe []
-        $this->products[] = $product;
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+        }
     }
     /**
      * Remove products
@@ -88,12 +94,13 @@ class commande
 
     /**
      * Get products
-     *
      * @return ArrayCollection
+     *
+     *
      */
     public function getProducts()
     {
-        return $this->products;
+        return array_values($this->products->toArray());
     }
 
 

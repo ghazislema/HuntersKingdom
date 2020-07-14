@@ -31,7 +31,7 @@ class thread
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="string", length=2000)
      */
     private $description;
 
@@ -63,6 +63,13 @@ class thread
      */
     private $topic;
 
+      /**
+     * @var string
+     *
+     * @ORM\Column(name="creationdate", type="string", length=255)
+     */
+    private $creationdate;
+
 
     /**
      * Get id
@@ -72,6 +79,31 @@ class thread
     public function getId()
     {
         return $this->id;
+    }
+
+
+    /**
+     * Set creationdate
+     *
+     * @param string $creationdate
+     *
+     * @return thread
+     */
+    public function setCreationdate($creationdate)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get creationdate
+     *
+     * @return string
+     */
+    public function getCreationdate()
+    {
+        return $this->creationdate;
     }
 
     /**
