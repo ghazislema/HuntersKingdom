@@ -10,4 +10,29 @@ namespace HuntersKingdomBundle\Repository;
  */
 class threadRepository extends \Doctrine\ORM\EntityRepository
 {
+    /*
+    public function getQuatreouvertes(){
+        $query = $this->createQueryBuilder('u')
+            ->orderBy('u.createdAt' , 'DESC')
+            ->getQuery();
+        return $query->execute();
+    }
+    public function getQuatreoverrated(){
+        $query = $this->createQueryBuilder('u')
+            ->orderBy('u.note' , 'DESC')
+            ->getQuery();
+        return $query->execute();
+    }
+*/
+    /* example de jointure
+    public function getUserByCountry ( $country )
+    {
+        $sql = $this->createQueryBuilder ( 'u' )
+            ->select ( 'u' )
+            ->innerJoin ( 'u.informations' , 'i' )
+            ->where ( "i.pays = :pays" )
+            ->setParameter ( 'pays' , $country );
+        return $sql->getQuery ()->getResult ();
+    }
+    */
 }

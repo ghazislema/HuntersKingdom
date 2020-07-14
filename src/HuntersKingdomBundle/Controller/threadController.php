@@ -2,24 +2,20 @@
 
 namespace HuntersKingdomBundle\Controller;
 
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use FOS\RestBundle\View\View;
 use HuntersKingdomBundle\Entity\thread;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
-/**
- * Thread controller.
- *
- * @Route("thread")
- */
 class threadController extends Controller
 {
     /**
      * Lists all thread entities.
      *
-     * @Route("/", name="thread_index")
+     * @Route("/api/threads", name="thread_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -27,6 +23,7 @@ class threadController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $threads = $em->getRepository('HuntersKingdomBundle:thread')->findAll();
+
 
         $data=$this->get('jms_serializer')->serialize($threads,'json');
         $response = new Response($data);
@@ -36,7 +33,7 @@ class threadController extends Controller
     /**
      * Creates a new thread entity.
      *
-     * @Route("/new", name="thread_new")
+     * @Route("/api/threads/new", name="thread_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -55,7 +52,7 @@ class threadController extends Controller
     /**
      * Finds and displays a thread entity.
      *
-     * @Route("/{id}", name="thread_show")
+     * @Route("/api/threads/{id}", name="thread_show")
      * @Method("GET")
      */
     public function showAction(thread $thread)
@@ -66,39 +63,10 @@ class threadController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing thread entity.
+     * Deletes a produit entity.
      *
-     * @Route("/{id}/edit", name="thread_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, thread $thread)
-    {
-        $em=$this->getDoctrine()->getManager();
-        $thread=$em->getRepository('HuntersKingdomBundle:thread')->find($thread->getId());
-        $data=$request->getContent();
-        $newdata=$this->get('jms_serializer')->deserialize($data,'HuntersKingdomBundle\Entity\thread','json');
-        if($newdata->getTitle() != null) {
-            $thread->setTitle($newdata->getTitle());
-        }
-        if($newdata->getDescription() != null) {
-            $thread->setDescription($newdata->getDescription());
-        }
-        if($newdata->getUpvote() != null) {
-            $thread->setUpvote($newdata->getUpvote());
-        }
-        if($newdata->getDownvote() != null) {
-            $thread->setDownvote($newdata->getDownvote());
-        }
-        $em->persist($thread);
-        $em->flush();
-        return new View("Product Modified Successfully", Response::HTTP_OK);
-    }
-
-    /**
-     * Deletes a thread entity.
-     *
-     * @Route("/{id}", name="thread_delete")
-     * @Method("DELETE")
+     * @Route("/api/threads/{id}/delete", name="thread_delete")
+     * @Method({"DELETE"})
      */
     public function deleteAction(Request $request, thread $thread)
     {
@@ -108,6 +76,39 @@ class threadController extends Controller
         $em->flush();
         return new View("Thread Deleted Successfully", Response::HTTP_OK);
     }
+
+    /**
+     * Lists all thread entities.
+     *
+     * @Route("/api/threadsvalid", name="validthread_index")
+     * @Method("GET")
+     */
+    public function findValidThreads()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $threads = $em->getRepository('HuntersKingdomBundle:thread')->findBy(['isValidated' => 'true' ]);
+        $data=$this->get('jms_serializer')->serialize($threads,'json');
+        $response = new Response($data);
+        return $response;
+    }
+
+
+    /**
+     * Lists all thread entities.
+     *
+     * @Route("/api/threadstovalidate", name="toValidthread_index")
+     * @Method("GET")
+     */
+    public function findThreadsToValidate()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $threads = $em->getRepository('HuntersKingdomBundle:thread')->findBy(['isValidated' => 'false' ]);
+        $data=$this->get('jms_serializer')->serialize($threads,'json');
+        $response = new Response($data);
+        return $response;
+    }
+
+
 
 
 }
