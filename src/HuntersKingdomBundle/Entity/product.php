@@ -77,12 +77,9 @@ class product
      */
     private $date;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="quantite", type="integer")
-     */
-    private $quantite;
+
+
+
 
 
     /**
@@ -287,21 +284,8 @@ class product
         return $this->date;
     }
 
-    /**
-     * @return string
-     */
-    public function getQuantite()
-    {
-        return $this->quantite;
-    }
 
-    /**
-     * @param string $quantite
-     */
-    public function setQuantite($quantite)
-    {
-        $this->quantite = $quantite;
-    }
+
 
 
 }

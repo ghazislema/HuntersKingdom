@@ -1,3 +1,11 @@
+hunters_kingdom_overwatch:
+    resource: "@HuntersKingdomBundle/Controller/overwatchController.php"
+    type:     annotation
+
+hunters_kingdom_commande:
+    resource: "@HuntersKingdomBundle/Controller/commandeController.php"
+    type:     annotation
+
 hunters_kingdom_threaddetail:
     resource: "@HuntersKingdomBundle/Controller/threaddetailController.php"
     type:     annotation
