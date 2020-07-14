@@ -41,11 +41,12 @@ class commandeController extends Controller
     {
         //récupérer le contenu de la requête envoyé par l'outil postman
         $data = $request->getContent();
-        //deserialize data: création d'un objet 'produit' à partir des données json envoyées
+        //deserialize data: création d'un objet 'commande' à partir des données json envoyées
         $commande = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\commande', 'json');
         //ajout dans la base
         $em = $this->getDoctrine()->getManager();
-        $em->persist($commande);
+        $x = $em->merge($commande);
+        $em->persist($x);
         $em->flush();
         return new View("Commande Added Successfully", Response::HTTP_OK);
     }
