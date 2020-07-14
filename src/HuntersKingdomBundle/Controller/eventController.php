@@ -74,7 +74,7 @@ class eventController extends Controller
      * @Route("/update/{id}", name="event_edit")
      * @Method({"GET", "POST"})
      */
-    public function uodateAction(Request $request, event $event)
+    public function updateAction(Request $request, event $event)
     {
         $em=$this->getDoctrine()->getManager();
         $event=$em->getRepository('HuntersKingdomBundle:event')->find($event->getId());
