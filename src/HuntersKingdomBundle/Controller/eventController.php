@@ -45,7 +45,9 @@ class eventController extends Controller
         //récupérer le contenu de la requête envoyé par l'outil postman
         $data = $request->getContent();
         //deserialize data: création d'un objet 'produit' à partir des données json envoyées
+        //dump($data);
         $produit = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\event', 'json');
+        //dump($produit);die;
         //ajout dans la base
         $em = $this->getDoctrine()->getManager();
         $em->persist($produit);
