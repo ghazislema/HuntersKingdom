@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\Post;
 
 class productController extends Controller
 {
@@ -113,4 +115,19 @@ class productController extends Controller
         $em->flush();
         return new View("Product Deleted Successfully", Response::HTTP_OK);
     }
+
+    /**
+     * search produits by user id.
+     * @Get("/api/products/sell")
+     *
+     */
+    public function produitSalesAction(Request $request)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $p=$em->getRepository('HuntersKingdomBundle:product')->findBy(array('type' => 'sell'));
+        $data=$this->get('jms_serializer')->serialize($p,'json');
+        $response=new Response($data);
+        return $response;
+    }
+
 }

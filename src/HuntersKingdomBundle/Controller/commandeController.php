@@ -119,7 +119,7 @@ class commandeController extends Controller
      * @Get("/api/{user}/mescommandes")
      *
      */
-    public function favorisByUserAction(Request $request, commande $commande)
+    public function commandeByUserAction(Request $request, commande $commande)
     {
         $em=$this->getDoctrine()->getManager();
         $p=$em->getRepository('HuntersKingdomBundle:commande')->findBy(array('user' => $commande->getUser()));
