@@ -77,7 +77,7 @@ class commandeController extends Controller
     {
         $em=$this->getDoctrine()->getManager();
         $commande=$em->getRepository('HuntersKingdomBundle:commande')->find($commande->getId());
-        $commande->setIsValid('true');
+        $commande->setIsValid(true);
         $em->persist($commande);
         $em->flush();
         return new View("commande Modified Successfully", Response::HTTP_OK);
