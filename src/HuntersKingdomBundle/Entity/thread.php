@@ -71,6 +71,14 @@ class thread
     private $creationdate;
 
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="$creatoruser", type="string", length=255)
+     */
+    private $creatoruser;
+
     /**
      * Get id
      *
@@ -79,6 +87,30 @@ class thread
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $creatoruser
+     *
+     * @return thread
+     */
+    public function setCreatoruser($creatoruser)
+    {
+        $this->creatoruser = $creatoruser;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string
+     */
+    public function getCreatoruser()
+    {
+        return $this->creatoruser;
     }
 
 
@@ -91,7 +123,7 @@ class thread
      */
     public function setCreationdate($creationdate)
     {
-        $this->title = $title;
+        $this->title = $creationdate;
 
         return $this;
     }
