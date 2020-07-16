@@ -77,7 +77,7 @@ class commandeController extends Controller
     {
         $em=$this->getDoctrine()->getManager();
         $commande=$em->getRepository('HuntersKingdomBundle:commande')->find($commande->getId());
-        $commande->setIsValid('true');
+        $commande->setIsValid(true);
         $em->persist($commande);
         $em->flush();
         return new View("commande Modified Successfully", Response::HTTP_OK);
@@ -108,11 +108,25 @@ class commandeController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $commandes = $em->getRepository('HuntersKingdomBundle:commande')->findBy(array(),array('id'=>'DESC'),1,0);
-
-
         $data=$this->get('jms_serializer')->serialize($commandes[0],'json');
         $response = new Response($data);
         return $response;
     }
+
+
+    /**
+     * search commande by user id.
+     * @Get("/api/{user}/mescommandes")
+     *
+     */
+    public function commandeByUserAction(Request $request, commande $commande)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $p=$em->getRepository('HuntersKingdomBundle:commande')->findBy(array('user' => $commande->getUser()));
+        $data=$this->get('jms_serializer')->serialize($p,'json');
+        $response=new Response($data);
+        return $response;
+    }
+
 
 }
