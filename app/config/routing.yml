@@ -1,3 +1,7 @@
+hunters_kingdom_notification:
+    resource: "@HuntersKingdomBundle/Controller/notificationController.php"
+    type:     annotation
+
 hunters_kingdom_overwatch:
     resource: "@HuntersKingdomBundle/Controller/overwatchController.php"
     type:     annotation
