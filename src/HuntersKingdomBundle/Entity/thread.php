@@ -75,7 +75,7 @@ class thread
     /**
      * @var string
      *
-     * @ORM\Column(name="$creatoruser", type="string", length=255)
+     * @ORM\Column(name="creatoruser", type="string", length=255)
      */
     private $creatoruser;
 
