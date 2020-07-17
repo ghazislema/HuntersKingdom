@@ -46,6 +46,12 @@ class event
     /**
      * @var string
      *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+    /**
+     * @var string
+     *
      * @ORM\Column(name="latitude", type="string", length=255, nullable=true)
      */
     private $latitude;
@@ -348,6 +354,23 @@ class event
     {
         $this->categorie = $categorie;
     }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
 
 
 }
