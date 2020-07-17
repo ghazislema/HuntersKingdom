@@ -18,6 +18,21 @@ use Symfony\Component\HttpFoundation\Response;
 class eventController extends Controller
 {
     /**
+     * Finds and displays a event entity.
+     *
+     * @Route("/get/{id}", name="event_get")
+     * @Method({"GET"})
+     * @param event $event
+     * @return Response
+     */
+    public function getAction(event $event)
+    {
+        $data=$this->get('jms_serializer')->serialize($event,'json');
+        $response=new Response($data);
+        return $response;
+    }
+
+    /**
      * Lists all event entities.
      *
      * @Route("/", name="event_index")
@@ -45,27 +60,13 @@ class eventController extends Controller
         //récupérer le contenu de la requête envoyé par l'outil postman
         $data = $request->getContent();
         //deserialize data: création d'un objet 'produit' à partir des données json envoyées
-        dump($data);
-        $produit = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\event', 'json');
+        $event = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\event', 'json');
         //dump($produit);die;
         //ajout dans la base
         $em = $this->getDoctrine()->getManager();
-        $em->persist($produit);
+        $em->persist($event);
         $em->flush();
         return new View("Event Added Successfully", Response::HTTP_OK);
-    }
-
-    /**
-     * Finds and displays a event entity.
-     *
-     * @Route("/get/{id}", name="event_get")
-     * @Method("GET")
-     */
-    public function getAction(event $event)
-    {
-        $data=$this->get('jms_serializer')->serialize($event,'json');
-        $response=new Response($data);
-        return $response;
     }
 
     /**
@@ -88,6 +89,9 @@ class eventController extends Controller
         }
         if($newdata->getadresse() != null) {
             $event->setAdresse($newdata->getadresse());
+        }
+        if($newdata->getDescription() != null) {
+            $event->setDescription($newdata->getDescription());
         }
         if($newdata->getLatitude() != null) {
             $event->setLatitude($newdata->getLatitude());
@@ -115,7 +119,7 @@ class eventController extends Controller
     /**
      * Finds and displays a event entity.
      *
-     * @Route("/getall", name="event_getall")
+     * @Route("/getall", name="event_get")
      * @Method("GET")
      */
     public function getAllEventAction()
