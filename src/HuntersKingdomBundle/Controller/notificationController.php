@@ -9,11 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Notification controller.
- *
- * @Route("notification")
- */
+
 class notificationController extends Controller
 {
     /**
@@ -34,9 +30,9 @@ class notificationController extends Controller
     }
 
     /**
-     * Creates a new produit entity.
+     * Creates a new notification entity.
      *
-     * @Route("/api/notification/new", name="notif_new")
+     * @Route("/api/notif/new", name="notif_new")
      * @Method({"POST"})
      */
     public function newAction(Request $request)
@@ -44,12 +40,12 @@ class notificationController extends Controller
         //récupérer le contenu de la requête envoyé par l'outil postman
         $data = $request->getContent();
         //deserialize data: création d'un objet 'produit' à partir des données json envoyées
-        $notif = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\notification', 'json');
+        $notification = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\notification', 'json');
         //ajout dans la base
         $em = $this->getDoctrine()->getManager();
-        $em->persist($notif);
+        $em->persist($notification);
         $em->flush();
-        return new View("Notification Added Successfully", Response::HTTP_OK);
+        return new View("Notif Added Successfully", Response::HTTP_OK);
     }
 
     /**
