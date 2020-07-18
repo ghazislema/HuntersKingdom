@@ -4,6 +4,8 @@ namespace HuntersKingdomBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * event
@@ -62,6 +64,15 @@ class event
      * @ORM\Column(name="langitude", type="string", length=255, nullable=true)
      */
     private $langitude;
+
+//    /**
+  //   * @var string
+    // * @Assert\NotBlank(message="Plz enter an image")
+     //* @Assert\Image()
+     //* @Vich/Uploadable
+     //* @ORM\Column(name="image", type="string", length=255, nullable=true)
+     //*/
+    //private $image;
 
     /**
      * @var \DateTime
@@ -370,6 +381,23 @@ class event
     {
         $this->description = $description;
     }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
 
 
 

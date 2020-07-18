@@ -5,9 +5,12 @@ namespace HuntersKingdomBundle\Controller;
 use FOS\RestBundle\View\View;
 use HuntersKingdomBundle\Entity\categorie;
 use HuntersKingdomBundle\Entity\event;
+use HuntersKingdomBundle\Form\eventType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -57,6 +60,24 @@ class eventController extends Controller
      */
         public function  addAction(Request $request)
     {
+
+        //$evente= new event();
+        //$form=$this->createForm( eventType::class,$evente);
+        //$form->handleRequest($request);
+        //if ($form->isValid() && $form->isSubmitted()){
+            ///**
+             //* @var UploadedFile $file
+             //*/
+            //$file=$evente->getImage();
+            //$fileName= md5(uniqid()).'.'.$file->guessClientExtension();
+
+            //$file->move()(
+
+          //          $this->getParameter('image_directory').$fileName
+        //        );
+
+      //  }
+        //$evente->setImage($fileName);
         //récupérer le contenu de la requête envoyé par l'outil postman
         $data = $request->getContent();
         //deserialize data: création d'un objet 'produit' à partir des données json envoyées
