@@ -1,7 +1,3 @@
-hunters_kingdom_favoris:
-    resource: "@HuntersKingdomBundle/Controller/favorisController.php"
-    type:     annotation
-
 hunters_kingdom_overwatch:
     resource: "@HuntersKingdomBundle/Controller/overwatchController.php"
     type:     annotation
@@ -39,6 +35,10 @@ hunters_kingdom_personne:
     resource: "@HuntersKingdomBundle/Controller/personneController.php"
     type:     annotation
 
+hunters_kingdom_location:
+    resource: "@HuntersKingdomBundle/Controller/locationController.php"
+    type:     annotation
+
 hunters_kingdom:
     resource: "@HuntersKingdomBundle/Resources/config/routing.yml"
     prefix:   /
@@ -46,3 +46,6 @@ hunters_kingdom:
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+
+
