@@ -117,7 +117,7 @@ class productController extends Controller
     }
 
     /**
-     * search produits by user id.
+     * search produits for sale.
      * @Get("/api/products/sell")
      *
      */
@@ -125,6 +125,20 @@ class productController extends Controller
     {
         $em=$this->getDoctrine()->getManager();
         $p=$em->getRepository('HuntersKingdomBundle:product')->findBy(array('type' => 'sell'));
+        $data=$this->get('jms_serializer')->serialize($p,'json');
+        $response=new Response($data);
+        return $response;
+    }
+
+    /**
+     * search produits by categorie.
+     * @Get("/api/products/categories/{categorie}")
+     *
+     */
+    public function produitByCategorieAction(Request $request, product $produit)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $p=$em->getRepository('HuntersKingdomBundle:product')->findBy(array('categorie' => $produit->getCategorie()));
         $data=$this->get('jms_serializer')->serialize($p,'json');
         $response=new Response($data);
         return $response;
