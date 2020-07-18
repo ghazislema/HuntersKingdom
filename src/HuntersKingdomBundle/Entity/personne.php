@@ -69,6 +69,14 @@ class personne
      * @ORM\ManyToMany(targetEntity="event", mappedBy="persones")
      */
     private $events;
+    /**
+     * @ORM\ManyToMany(targetEntity="demande", mappedBy="persones")
+     */
+    private $demandes;
+/**
+     * @ORM\ManyToMany(targetEntity="offre", mappedBy="persones")
+     */
+    private $offres;
 
 
 
@@ -78,6 +86,8 @@ class personne
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->demandes = new ArrayCollection();
+        $this->offres = new ArrayCollection();
     }
 
 
