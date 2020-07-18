@@ -31,6 +31,13 @@ class overwatch
     /**
      * @var string
      *
+     * @ORM\Column(name="reason", type="string", length=500)
+     */
+    private $reason;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="subjectId", type="string", length=255)
      */
     private $subjectId;
@@ -65,6 +72,18 @@ class overwatch
         $this->type = $type;
 
         return $this;
+    }
+
+    public function setReason($reason)
+    {
+        $this->reason = $reason;
+
+        return $this;
+    }
+
+    public function getReason()
+    {
+        return $this->reason;
     }
 
     /**

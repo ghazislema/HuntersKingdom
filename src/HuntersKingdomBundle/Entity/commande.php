@@ -57,9 +57,16 @@ class commande
     /**
      * @var boolean
      *
-     * @ORM\Column(name="isValid")
+     * @ORM\Column(name="isValid", type="boolean")
      */
-    private $isValid = 'false';
+    private $isValid = false;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="user", type="integer")
+     */
+    private $user;
 
     /**
      * @ORM\ManyToMany(targetEntity="product", cascade={"persist", "merge"})
@@ -225,6 +232,23 @@ class commande
     {
         $this->isValid = $isValid;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
 
 
 

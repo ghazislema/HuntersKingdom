@@ -3,6 +3,7 @@
 namespace HuntersKingdomBundle\Controller;
 
 use HuntersKingdomBundle\Entity\commande;
+use HuntersKingdomBundle\Repository\commandeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -77,9 +78,10 @@ class commandeController extends Controller
     {
         $em=$this->getDoctrine()->getManager();
         $commande=$em->getRepository('HuntersKingdomBundle:commande')->find($commande->getId());
-        $commande->setIsValid('true');
+        $commande->setIsValid(true);
         $em->persist($commande);
         $em->flush();
+        $this->sendMail();
         return new View("commande Modified Successfully", Response::HTTP_OK);
     }
 
@@ -108,11 +110,48 @@ class commandeController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $commandes = $em->getRepository('HuntersKingdomBundle:commande')->findBy(array(),array('id'=>'DESC'),1,0);
-
-
         $data=$this->get('jms_serializer')->serialize($commandes[0],'json');
         $response = new Response($data);
         return $response;
+    }
+
+
+    /**
+     * search commande by user id.
+     * @Get("/api/{user}/mescommandes")
+     *
+     */
+    public function commandeByUserAction(Request $request, commande $commande)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $p=$em->getRepository('HuntersKingdomBundle:commande')->findBy(array('user' => $commande->getUser()));
+        $data=$this->get('jms_serializer')->serialize($p,'json');
+        $response=new Response($data);
+        return $response;
+    }
+
+    /**
+     * search products by commande id.
+     * @Get("/api/mescommandes/{id}/products")
+     *
+     */
+    public function productsByCommandeAction(Request $request, commande $commande)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $p=$em->getRepository('HuntersKingdomBundle:product')->findAllProductsByCommande($commande->getId());
+        $data=$this->get('jms_serializer')->serialize($p,'json');
+        $response=new Response($data);
+        return $response;
+    }
+
+    public function sendMail()
+    {
+        $message = \Swift_Message::newInstance()
+            ->setSubject('test')
+            ->setFrom('khalil.benmayassa@esprit.tn')
+            ->setTo('khalil.benmayassa@esprit.tn')
+            ->setBody('Votre Commande est validée');
+        $this->get('mailer')->send($message);
     }
 
 }

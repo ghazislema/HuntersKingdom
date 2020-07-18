@@ -3,6 +3,8 @@
 namespace HuntersKingdomBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * personne
@@ -67,10 +69,25 @@ class personne
      * @ORM\ManyToMany(targetEntity="event", mappedBy="persones")
      */
     private $events;
+    /**
+     * @ORM\ManyToMany(targetEntity="demande", mappedBy="persones")
+     */
+    private $demandes;
+/**
+     * @ORM\ManyToMany(targetEntity="offre", mappedBy="persones")
+     */
+    private $offres;
+
+
+
+
+
 
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->demandes = new ArrayCollection();
+        $this->offres = new ArrayCollection();
     }
 
 
