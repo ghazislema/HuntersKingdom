@@ -3,6 +3,7 @@
 namespace HuntersKingdomBundle\Controller;
 
 use HuntersKingdomBundle\Entity\commande;
+use HuntersKingdomBundle\Repository\commandeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -80,6 +81,7 @@ class commandeController extends Controller
         $commande->setIsValid(true);
         $em->persist($commande);
         $em->flush();
+        $this->sendMail();
         return new View("commande Modified Successfully", Response::HTTP_OK);
     }
 
@@ -128,5 +130,28 @@ class commandeController extends Controller
         return $response;
     }
 
+    /**
+     * search products by commande id.
+     * @Get("/api/mescommandes/{id}/products")
+     *
+     */
+    public function productsByCommandeAction(Request $request, commande $commande)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $p=$em->getRepository('HuntersKingdomBundle:product')->findAllProductsByCommande($commande->getId());
+        $data=$this->get('jms_serializer')->serialize($p,'json');
+        $response=new Response($data);
+        return $response;
+    }
+
+    public function sendMail()
+    {
+        $message = \Swift_Message::newInstance()
+            ->setSubject('test')
+            ->setFrom('khalil.benmayassa@esprit.tn')
+            ->setTo('khalil.benmayassa@esprit.tn')
+            ->setBody('Votre Commande est validée');
+        $this->get('mailer')->send($message);
+    }
 
 }
