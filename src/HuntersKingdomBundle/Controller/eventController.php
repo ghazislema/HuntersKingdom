@@ -23,12 +23,12 @@ class eventController extends Controller
     /**
      * Finds and displays a event entity.
      *
-     * @Route("/get/{id}", name="event_get")
+     * @Route("/get/{id}", name="event_get_byId")
      * @Method({"GET"})
      * @param event $event
      * @return Response
      */
-    public function getAction(event $event)
+    public function getEventAction(event $event)
     {
         $data=$this->get('jms_serializer')->serialize($event,'json');
         $response=new Response($data);
@@ -94,7 +94,7 @@ class eventController extends Controller
      * Displays a form to edit an existing event entity.
      *
      * @Route("/update/{id}", name="event_edit")
-     * @Method({"GET", "POST"})
+     * @Method({"Put"})
      */
     public function updateAction(Request $request, event $event)
     {

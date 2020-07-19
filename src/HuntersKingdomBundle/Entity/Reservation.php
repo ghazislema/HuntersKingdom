@@ -38,7 +38,7 @@ class Reservation
     /**
      * @var string
      *
-     * @ORM\Column(name="telephone", type="string", length=255)
+     * @ORM\Column(name="telephone", type="string")
      */
     private $telephone;
 
@@ -166,7 +166,7 @@ class Reservation
     /**
      * Set event
      *
-     * @param \stdClass $event
+     * @param event $event
      *
      * @return Reservation
      */
@@ -180,7 +180,7 @@ class Reservation
     /**
      * Get event
      *
-     * @return \stdClass
+     * @return event
      */
     public function getEvent()
     {
