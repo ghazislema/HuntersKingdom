@@ -126,62 +126,6 @@ class threadController extends Controller
         return new View("Thread validated Successfully", Response::HTTP_OK);
     }
 
-    /**
-     * Lists all Subjects entities.
-     *
-     * @Route("/api/overwatch", name="overwatch_index")
-     * @Method("GET")
-     */
-    public function overwatchList()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $threads = $em->getRepository('HuntersKingdomBundle:overwatch')->findAll();
-        $data=$this->get('jms_serializer')->serialize($threads,'json');
-        $response = new Response($data);
-        return $response;
-    }
-
-    /**
-     * Deletes an overwatch entity.
-     *
-     * @Route("/api/overwatch/{id}/ignore", name="overwatch_ignore")
-     * @Method({"DELETE"})
-     */
-    public function ignoreSubject(Request $request, overwatch $overwatch)
-    {
-        $em=$this->getDoctrine()->getManager();
-        $p=$em->getRepository('HuntersKingdomBundle:overwatch')->find($overwatch->getId());
-        $em->remove($p);
-        $em->flush();
-        return new View("Report has been ignored", Response::HTTP_OK);
-    }
-
-    /**
-     * Deletes an overwatch entity.
-     *
-     * @Route("/api/overwatch/{id}/delete", name="overwatch_delete")
-     * @Method({"DELETE"})
-     */
-    public function deleteSubject(Request $request, overwatch $overwatch)
-    {
-        $em=$this->getDoctrine()->getManager();
-
-        if ($overwatch->getType() == "Thread")
-        {
-            $p=$em->getRepository('HuntersKingdomBundle:thread')->find($overwatch->getSubjectId());
-            $em->remove($p);
-        }
-        else {
-            $p=$em->getRepository('HuntersKingdomBundle:threaddetail')->find($overwatch->getSubjectId());
-            $em->remove($p);
-        }
-
-        $ow=$em->getRepository('HuntersKingdomBundle:overwatch')->find($overwatch->getId());
-        $em->remove($ow);
-        $em->flush();
-        return new View("Subject has been deleted", Response::HTTP_OK);
-
-    }
 
 
     /**

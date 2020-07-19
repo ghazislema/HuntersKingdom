@@ -49,6 +49,13 @@ class overwatch
      */
     private $reportNb;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="userid", type="string", length=255)
+     */
+    private $userid;
+
 
     /**
      * Get id
@@ -58,6 +65,30 @@ class overwatch
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $userid
+     *
+     * @return overwatch
+     */
+    public function setUserid($userid)
+    {
+        $this->userid = $userid;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getUserid()
+    {
+        return $this->userid;
     }
 
     /**
@@ -74,6 +105,13 @@ class overwatch
         return $this;
     }
 
+    /**
+     * Set type
+     *
+     * @param string $reason
+     *
+     * @return overwatch
+     */
     public function setReason($reason)
     {
         $this->reason = $reason;
@@ -81,6 +119,11 @@ class overwatch
         return $this;
     }
 
+    /**
+     * Get type
+     *
+     * @return string
+     */
     public function getReason()
     {
         return $this->reason;
