@@ -119,6 +119,12 @@ class event
 
     private $persones;
 
+    /**
+     * @var Reservation[]
+     * @ORM\OneToMany(targetEntity="HuntersKingdomBundle\Entity\Reservation", mappedBy="event")
+     */
+    private $reservations;
+
     public function __construct()
     {
         $this->persones = new ArrayCollection();
