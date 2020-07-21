@@ -42,6 +42,8 @@ class notification
      */
     private $date;
 
+    
+
 
     /**
      * Get id
