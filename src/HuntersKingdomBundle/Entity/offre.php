@@ -246,6 +246,29 @@ class offre
     {
         $this->persones = $persones;
     }
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="isValidated", type="string", length=255)
+     */
+    private $isValidated;
+
+    /**
+     * @return string
+     */
+    public function getIsValidated(): string
+    {
+        return $this->isValidated;
+    }
+
+    /**
+     * @param string $isValidated
+     */
+    public function setIsValidated(string $isValidated): void
+    {
+        $this->isValidated = $isValidated;
+    }
+
 
 }
 
