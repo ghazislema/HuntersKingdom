@@ -99,6 +99,9 @@ class demandeController extends Controller
         if($newdata->getCategorie() != null) {
             $od->setCategorie($newdata->getCategorie());
         }
+        if($newdata->getIsValidated() != null) {
+            $od->setIsValidated($newdata->getIsValidated());
+        }
 
         $em->persist($od);
         $em->flush();
