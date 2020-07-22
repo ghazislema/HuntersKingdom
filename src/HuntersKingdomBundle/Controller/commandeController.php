@@ -79,9 +79,26 @@ class commandeController extends Controller
         $em=$this->getDoctrine()->getManager();
         $commande=$em->getRepository('HuntersKingdomBundle:commande')->find($commande->getId());
         $commande->setIsValid(true);
+        /* send Mail */
+        // Create the Transport
+        $transport = (new \Swift_SmtpTransport('smtp.googlemail.com', 465, 'ssl'))
+            ->setUsername('aymenkhalil19960@gmail.com')
+            ->setPassword('xmpsznndallpjdyw')
+        ;
+        // Create the Mailer using your created Transport
+        $mailer = new \Swift_Mailer($transport);
+        // Create a message
+        $body = 'Votre Commande a été validée avec succes';
+        $message = (new \Swift_Message('HuntKingDom'))
+            ->setFrom(['aymenkhalil19960@gmail.com' => 'HUNTKINGDOM'])
+            ->setTo('khalil.benmayassa@esprit.tn')
+            ->setBody($body)
+            ->setContentType('text/html')
+        ;
+        // Send the message
+        $mailer->send($message);
         $em->persist($commande);
         $em->flush();
-        $this->sendMail();
         return new View("commande Modified Successfully", Response::HTTP_OK);
     }
 
@@ -143,15 +160,6 @@ class commandeController extends Controller
         $response=new Response($data);
         return $response;
     }
-
-    public function sendMail()
-    {
-        $message = \Swift_Message::newInstance()
-            ->setSubject('test')
-            ->setFrom('khalil.benmayassa@esprit.tn')
-            ->setTo('khalil.benmayassa@esprit.tn')
-            ->setBody('Votre Commande est validée');
-        $this->get('mailer')->send($message);
-    }
+    
 
 }
