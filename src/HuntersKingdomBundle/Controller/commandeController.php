@@ -160,6 +160,6 @@ class commandeController extends Controller
         $response=new Response($data);
         return $response;
     }
-    
+
 
 }
