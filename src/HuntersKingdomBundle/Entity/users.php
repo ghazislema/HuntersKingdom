@@ -45,14 +45,14 @@ class users
     /**
      * @var string
      *
-     * @ORM\Column(name="isValidator", type="string", length=255)
+     * @ORM\Column(name="isValidator", type="boolean")
      */
     private $isValidator;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="active", type="string", length=255)
+     * @ORM\Column(name="active", type="boolean")
      */
     private $active;
 
