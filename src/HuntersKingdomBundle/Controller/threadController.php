@@ -35,8 +35,8 @@ class threadController extends Controller
     /**
      * Creates a new thread entity.
      *
-     * @Route("/api/threads/new", name="thread_new")
-     * @Method({"GET", "POST"})
+     * @Route("/api/threads/new", name="thread_newx")
+     * @Method({"POST"})
      */
     public function newAction(Request $request)
     {
