@@ -5,7 +5,12 @@ namespace HuntersKingdomBundle\Controller;
 use HuntersKingdomBundle\Entity\users;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\View\View;
+use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\Post;
 
 
 class usersController extends Controller
@@ -35,7 +40,7 @@ class usersController extends Controller
      */
     public function newAction(Request $request)
     {
-        $user = new User();
+        $user = new users();
         $form = $this->createForm('HuntersKingdomBundle\Form\usersType', $user);
         $form->handleRequest($request);
 
@@ -56,17 +61,16 @@ class usersController extends Controller
     /**
      * Finds and displays a user entity.
      *
-     * @Route("/{id}", name="users_show")
+     * @Route("/api/users/{username}", name="users_show")
      * @Method("GET")
      */
     public function showAction(users $user)
     {
-        $deleteForm = $this->createDeleteForm($user);
-
-        return $this->render('users/show.html.twig', array(
-            'user' => $user,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $em=$this->getDoctrine()->getManager();
+        $p=$em->getRepository('HuntersKingdomBundle:users')->findBy(array('username' => $user->getUsername()));
+        $data=$this->get('jms_serializer')->serialize($p[0],'json');
+        $response=new Response($data);
+        return $response;
     }
 
     /**
@@ -129,4 +133,7 @@ class usersController extends Controller
             ->getForm()
         ;
     }
+
+
+
 }
