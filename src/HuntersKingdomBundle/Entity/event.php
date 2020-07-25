@@ -65,6 +65,21 @@ class event
      */
     private $langitude;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="likes", type="integer", nullable=true)
+     */
+    private $like;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="dislike", type="integer", nullable=true)
+     */
+    private $dislike;
+
+
+
 //    /**
   //   * @var string
     // * @Assert\NotBlank(message="Plz enter an image")
@@ -128,6 +143,8 @@ class event
     public function __construct()
     {
         $this->persones = new ArrayCollection();
+        $this->like = 0;
+        $this->dislike = 0;
     }
 
     /**
@@ -402,6 +419,38 @@ class event
     public function setImage($image)
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLike()
+    {
+        return $this->like ? $this->like : 0;
+    }
+
+    /**
+     * @param int $like
+     */
+    public function setLike($like)
+    {
+        $this->like = $like;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDislike()
+    {
+        return $this->dislike ? $this->dislike : 0;
+    }
+
+    /**
+     * @param int $dislike
+     */
+    public function setDislike($dislike)
+    {
+        $this->dislike = $dislike;
     }
 
 

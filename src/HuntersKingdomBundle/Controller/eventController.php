@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -167,4 +168,41 @@ class eventController extends Controller
         return new View("Event Deleted Successfully", Response::HTTP_OK);
 
     }
+
+    /**
+     * Displays a form to edit an existing event entity.
+     *
+     * @Route("/like/{id}", name="event_like")
+     * @Method({"PUT"})
+     */
+    public function likeAction(Request $request, event $event)
+    {
+        $event->setLike($event->getLike() + 1);
+        //ajout dans la base
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($event);
+        $em->flush();
+        return new JsonResponse([
+            'like' => $event->getLike()
+        ]);
+    }
+
+    /**
+     * Displays a form to edit an existing event entity.
+     *
+     * @Route("/disike/{id}", name="event_dislike")
+     * @Method({"PUT"})
+     */
+    public function dislikeAction(Request $request, event $event)
+    {
+        $event->setDislike($event->getDislike() + 1);
+        //ajout dans la base
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($event);
+        $em->flush();
+        return new JsonResponse([
+            'dislike' => $event->getDislike()
+        ]);
+    }
+
 }
