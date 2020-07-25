@@ -38,14 +38,14 @@ class overwatch
     /**
      * @var string
      *
-     * @ORM\Column(name="subjectId", type="string", length=255)
+     * @ORM\Column(name="subjectid", type="string", length=255)
      */
     private $subjectId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="reportNb", type="string", length=255)
+     * @ORM\Column(name="reportnb", type="string", length=255)
      */
     private $reportNb;
 

@@ -32,7 +32,7 @@ class threaddetailController extends Controller
     /**
      * Creates a new threaddetail entity.
      *
-     * @Route("/new", name="threaddetail_new")
+     * @Route("/api/threaddetail/new", name="threaddetail_new_com")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)

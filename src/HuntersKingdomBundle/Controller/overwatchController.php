@@ -30,7 +30,7 @@ class overwatchController extends Controller
     /**
      * Creates a new overwatch entity.
      *
-     * @Route("/new", name="overwatch_new")
+     * @Route("/api/overwatchreport/new", name="overwatch_new_rep")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
