@@ -31,7 +31,7 @@ class thread
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=2000)
+     * @ORM\Column(name="description", type="string", length=4000)
      */
     private $description;
 

@@ -31,7 +31,7 @@ class threaddetail
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="string", length=255)
+     * @ORM\Column(name="comment", type="string", length=4000)
      */
     private $comment;
 
