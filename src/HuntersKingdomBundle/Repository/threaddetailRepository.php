@@ -2,6 +2,8 @@
 
 namespace HuntersKingdomBundle\Repository;
 
+use HuntersKingdomBundle\Entity\thread;
+
 /**
  * threaddetailRepository
  *
@@ -10,4 +12,13 @@ namespace HuntersKingdomBundle\Repository;
  */
 class threaddetailRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function getCommentByThreadId(thread $thread){
+        $query = $this->createQueryBuilder('u')
+            ->where('u.threadid = :id')
+            ->orderBy('u.createdAt' , 'DESC')
+            ->setParameter ( 'id' , $thread->getId() )
+            ->getQuery();
+        return $query->getResult ();
+    }
 }

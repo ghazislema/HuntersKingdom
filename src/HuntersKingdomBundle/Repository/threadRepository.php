@@ -10,6 +10,7 @@ namespace HuntersKingdomBundle\Repository;
  */
 class threadRepository extends \Doctrine\ORM\EntityRepository
 {
+    //hetheya exemple kifech na3mlou les requetes avancé
     /*
     public function getQuatreouvertes(){
         $query = $this->createQueryBuilder('u')

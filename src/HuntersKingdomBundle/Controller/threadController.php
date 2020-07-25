@@ -128,24 +128,7 @@ class threadController extends Controller
 
 
 
-    /**
-     * Creates a new notification entity.
-     *
-     * @Route("/api/threadnotif/new", name="notif_new")
-     * @Method({"POST"})
-     */
-    public function newNotif(Request $request)
-    {
-        //récupérer le contenu de la requête envoyé par l'outil postman
-        $data = $request->getContent();
-        //deserialize data: création d'un objet 'produit' à partir des données json envoyées
-        $notification = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\notification', 'json');
-        //ajout dans la base
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($notification);
-        $em->flush();
-        return new View("Notif Added Successfully", Response::HTTP_OK);
-    }
+
 
 
 

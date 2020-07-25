@@ -2,6 +2,7 @@
 
 namespace HuntersKingdomBundle\Controller;
 
+use HuntersKingdomBundle\Entity\thread;
 use HuntersKingdomBundle\Entity\threaddetail;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -14,7 +15,7 @@ class threaddetailController extends Controller
     /**
      * Lists all threaddetail entities.
      *
-     * @Route("/", name="threaddetail_index")
+     * @Route("/api/threadcomments", name="threaddetail_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -81,12 +82,31 @@ class threaddetailController extends Controller
      */
     public function deleteAction(Request $request, threaddetail $threaddetail)
     {
+
         $em=$this->getDoctrine()->getManager();
         $p=$em->getRepository('HuntersKingdomBundle:threaddetail')->find($threaddetail->getId());
         $em->remove($p);
         $em->flush();
         return new View("ThreadDetail Deleted Successfully", Response::HTTP_OK);
     }
+
+    /**
+     * retrieve  details entitie of a thread
+     *
+     * @Route("/api/threadcomments/{id}", name="threadetail_getindex")
+     * @Method("GET")
+     */
+    public function findThreadsToValidate(Request $request)
+    {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $threads = $em->getRepository('HuntersKingdomBundle:threaddetail')->findBy(['threadid' => $id ]);
+        $data=$this->get('jms_serializer')->serialize($threads,'json');
+        $response = new Response($data);
+        return $response;
+    }
+
+
 
 
 }
