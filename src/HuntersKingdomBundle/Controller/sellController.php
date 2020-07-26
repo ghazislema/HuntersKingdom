@@ -116,6 +116,13 @@ class sellController extends Controller
         return new View("demande Deleted Successfully", Response::HTTP_OK);
     }
 
-
+    public function sellByCategorieAction(Request $request, sell $produit)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $p=$em->getRepository('HuntersKingdomBundle:sell')->findBy(array('categorie' => $produit->getCategorie()));
+        $data=$this->get('jms_serializer')->serialize($p,'json');
+        $response=new Response($data);
+        return $response;
+    }
 
 }

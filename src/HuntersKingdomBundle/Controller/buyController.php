@@ -115,4 +115,17 @@ class buyController extends Controller
         $em->flush();
         return new View("Offre Deleted Successfully", Response::HTTP_OK);
     }
+    /**
+     * search offre by categorie.
+     * @Get("/api/buy/categories/{categorie}", name="search")
+     *
+     */
+    public function buyByCategorieAction(Request $request, buy $produit)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $p=$em->getRepository('HuntersKingdomBundle:buy')->findBy(array('categorie' => $produit->getCategorie()));
+        $data=$this->get('jms_serializer')->serialize($p,'json');
+        $response=new Response($data);
+        return $response;
+    }
 }
