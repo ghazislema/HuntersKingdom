@@ -88,7 +88,7 @@ class commandeController extends Controller
         // Create the Mailer using your created Transport
         $mailer = new \Swift_Mailer($transport);
         // Create a message
-        $body = 'Votre Commande a été validée avec succes';
+        $body = 'Votre Commande '.$commande->getNumeroCommande().' a été validée avec succes';
         $message = (new \Swift_Message('HuntKingDom'))
             ->setFrom(['aymenkhalil19960@gmail.com' => 'HUNTKINGDOM'])
             ->setTo('khalil.benmayassa@esprit.tn')
