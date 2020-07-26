@@ -256,7 +256,7 @@ class offre
     /**
      * @return string
      */
-    public function getIsValidated(): string
+    public function getIsValidated()
     {
         return $this->isValidated;
     }
@@ -264,7 +264,7 @@ class offre
     /**
      * @param string $isValidated
      */
-    public function setIsValidated(string $isValidated): void
+    public function setIsValidated(string $isValidated)
     {
         $this->isValidated = $isValidated;
     }

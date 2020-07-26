@@ -52,16 +52,16 @@ class event
      */
     private $description;
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="latitude", type="string", length=255, nullable=true)
+     * @ORM\Column(name="latitude", type="float")
      */
     private $latitude;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="langitude", type="string", length=255, nullable=true)
+     * @ORM\Column(name="langitude", type="float")
      */
     private $langitude;
 
@@ -232,7 +232,7 @@ class event
     /**
      * Set latitude
      *
-     * @param string $latitude
+     * @param float $latitude
      *
      * @return event
      */
@@ -246,7 +246,7 @@ class event
     /**
      * Get latitude
      *
-     * @return string
+     * @return float
      */
     public function getLatitude()
     {
@@ -256,7 +256,7 @@ class event
     /**
      * Set langitude
      *
-     * @param string $langitude
+     * @param float $langitude
      *
      * @return event
      */
@@ -270,7 +270,7 @@ class event
     /**
      * Get langitude
      *
-     * @return string
+     * @return float
      */
     public function getLangitude()
     {

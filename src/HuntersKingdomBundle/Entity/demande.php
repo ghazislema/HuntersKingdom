@@ -256,7 +256,7 @@ class demande
     /**
      * @return string
      */
-    public function getIsValidated(): string
+    public function getIsValidated()
     {
         return $this->isValidated;
     }
@@ -264,7 +264,7 @@ class demande
     /**
      * @param string $isValidated
      */
-    public function setIsValidated(string $isValidated): void
+    public function setIsValidated($isValidated)
     {
         $this->isValidated = $isValidated;
     }

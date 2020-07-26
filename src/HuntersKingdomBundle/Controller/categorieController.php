@@ -87,7 +87,7 @@ class categorieController extends Controller
     /**
      * Displays a form to edit an existing categorie entity.
      *
-     * @Route("/update/{id}", name="categorie_update")
+     * @Route("/update/{id}", name="categorie_edit")
      * @Method({"PUT"})
      */
     public function updateAction(Request $request, categorie $categorie)

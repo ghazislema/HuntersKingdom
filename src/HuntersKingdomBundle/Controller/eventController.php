@@ -149,6 +149,8 @@ class eventController extends Controller
         $em=$this->getDoctrine()->getManager();
         $event=$em->getRepository(event::class)->findAll();
         $data=$this->get('jms_serializer')->serialize($event,'json');
+
+
         $response=new Response($data);
         return $response;
     }
