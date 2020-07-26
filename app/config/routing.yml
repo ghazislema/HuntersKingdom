@@ -53,6 +53,15 @@ hunters_kingdom_personne:
     resource: "@HuntersKingdomBundle/Controller/personneController.php"
     type:     annotation
 
+
+hunters_kingdom_buy:
+    resource: "@HuntersKingdomBundle/Controller/buyController.php"
+    type:     annotation
+
+hunters_kingdom_sell:
+    resource: "@HuntersKingdomBundle/Controller/sellController.php"
+    type:     annotation
+
 hunters_kingdom:
     resource: "@HuntersKingdomBundle/Resources/config/routing.yml"
     prefix:   /

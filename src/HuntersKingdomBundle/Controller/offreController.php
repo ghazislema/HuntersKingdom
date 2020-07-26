@@ -42,7 +42,6 @@ class offreController extends Controller
         //deserialize data: création d'un objet 'produit' à partir des données json envoyées
         dump($data);
         $offreDemande = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\offre', 'json');
-        //dump($produit);die;
         //ajout dans la base
         $em = $this->getDoctrine()->getManager();
         $em->persist($offreDemande);
@@ -76,7 +75,7 @@ class offreController extends Controller
         $data=$request->getContent();
         $newdata=$this->get('jms_serializer')->deserialize($data,'HuntersKingdomBundle\Entity\offre','json');
         if($newdata->getTitre() != null) {
-            $od->getTitre($newdata->getTitre());
+            $od->setTitre($newdata->getTitre());
         }
         if($newdata->getType() != null) {
             $od->setType($newdata->getType());

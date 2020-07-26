@@ -35,15 +35,38 @@ class overwatchController extends Controller
      */
     public function newAction(Request $request)
     {
-        //récupérer le contenu de la requête envoyé par l'outil postman
         $data = $request->getContent();
-        //deserialize data: création d'un objet 'produit' à partir des données json envoyées
         $overwatch = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\overwatch', 'json');
-        //ajout dans la base
         $em = $this->getDoctrine()->getManager();
-        $em->persist($overwatch);
+        $oldoverwatch=$em->getRepository('HuntersKingdomBundle:overwatch')
+            ->findBy(['subjectId' => $overwatch->getSubjectId(),'type'=>$overwatch->getType(),'reason'=> $overwatch->getReason()]);
+        if ($oldoverwatch != null) {
+            $nbvote = $oldoverwatch[0]->getReportNb();
+            $nbvote = (int) $nbvote + 1;
+            $oldoverwatch[0]->setReportNb($nbvote);
+            $em->persist($oldoverwatch[0]);
+        }
+        else {
+            $em->persist($overwatch);
+        }
         $em->flush();
         return new View("Subject to overwatch Added Successfully", Response::HTTP_OK);
+    }
+
+    /**
+     * Creates a new rep entity.
+     *
+     * @Route("/api/userreport/new", name="user_new_rep")
+     * @Method({"GET", "POST"})
+     */
+    public function newUserReport(Request $request)
+    {
+        $data = $request->getContent();
+        $rep = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\report', 'json');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($rep);
+        $em->flush();
+        return new View("Report Added Successfully", Response::HTTP_OK);
     }
 
     /**
@@ -124,5 +147,37 @@ class overwatchController extends Controller
         $em->remove($p);
         $em->flush();
         return new View("Report has been ignored", Response::HTTP_OK);
+    }
+
+    /**
+     * get an report entity.
+     *
+     * @Route("/api/checkreport/{subjid}/{userid}/{subjtype}", name="check_rep")
+     * @Method({"GET"})
+     */
+    public function checkreport(Request $request)
+    {
+        $subjid = $request->get('subjid');
+        $userid = $request->get('userid');
+        $subjtype = $request->get('subjtype');
+        $em=$this->getDoctrine()->getManager();
+        $p=$em->getRepository('HuntersKingdomBundle:report')->findBy(['subject' => $subjtype,'user' => $userid, 'subjectid' => $subjid ]);
+        $data=$this->get('jms_serializer')->serialize($p,'json');
+        $response = new Response($data);
+        return $response;
+    }
+
+    /**
+     * Lists all report entities.
+     *
+     * @Route("/api/reports", name="reports_ind")
+     * @Method("GET")
+     */
+    public function findAllReports()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $threads = $em->getRepository('HuntersKingdomBundle:report')->findAll();$data=$this->get('jms_serializer')->serialize($threads,'json');
+        $response = new Response($data);
+        return $response;
     }
 }

@@ -15,7 +15,7 @@ class notificationController extends Controller
     /**
      * Creates a new notification entity.
      *
-     * @Route("/api/threadnotif/new", name="notif_new")
+     * @Route("/api/notif/new", name="notif_new")
      * @Method({"POST"})
      */
     public function newNotif(Request $request)
