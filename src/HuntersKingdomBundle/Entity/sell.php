@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  *
  *
- * @ORM\Table(name="offre")
- * @ORM\Entity(repositoryClass="HuntersKingdomBundle\Repository\offreRepository")
+ * @ORM\Table(name="sell")
+ * @ORM\Entity(repositoryClass="HuntersKingdomBundle\Repository\sellRepository")
  */
-class offre
+class sell
 {
     /**
      * @var int
@@ -27,13 +27,6 @@ class offre
      * @ORM\Column(name="titre", type="string", length=255)
      */
     private $titre;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255)
-     */
-    private $type;
 
     /**
      * @var string
@@ -67,25 +60,13 @@ class offre
      * @ORM\Column(name="etat", type="string")
      */
     private $etat;
-
     /**
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="categorie" , cascade={"persist", "merge"})
-     * @ORM\JoinColumn(name="categorie_id",referencedColumnName="id")
+     * @ORM\Column(name="categorie", type="string")
      */
-
     private $categorie;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="HuntersKingdomBundle\Entity\personne", inversedBy="offres")
-     * @ORM\JoinTable(name="persone_offre")
-     */
-    private $persones;
-
-    public function __construct()
-    {
-        $this->persones = new ArrayCollection();
-    }
 
     /**
      * @return int
@@ -119,21 +100,6 @@ class offre
         $this->titre = $titre;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
 
     /**
      * @return string
@@ -216,7 +182,7 @@ class offre
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCategorie()
     {
@@ -224,51 +190,11 @@ class offre
     }
 
     /**
-     * @param mixed $categorie
+     * @param string $categorie
      */
     public function setCategorie($categorie)
     {
         $this->categorie = $categorie;
     }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getPersones()
-    {
-        return $this->persones;
-    }
-
-    /**
-     * @param ArrayCollection $persones
-     */
-    public function setPersones($persones)
-    {
-        $this->persones = $persones;
-    }
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="isValidated", type="string", length=255)
-     */
-    private $isValidated;
-
-    /**
-     * @return string
-     */
-    public function getIsValidated()
-    {
-        return $this->isValidated;
-    }
-
-    /**
-     * @param string $isValidated
-     */
-    public function setIsValidated(string $isValidated)
-    {
-        $this->isValidated = $isValidated;
-    }
-
-
 }
 
