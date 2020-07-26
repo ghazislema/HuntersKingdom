@@ -2,7 +2,7 @@
 <project version="4">
   <component name="PhpIncludePathManager">
     <include_path>
-      <path value="$PROJECT_DIR$/../../bin/php/php5.6.40" />
+      <path value="" />
       <path value="$PROJECT_DIR$/vendor/symfony/swiftmailer-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-util" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
@@ -54,7 +54,7 @@
       <path value="$PROJECT_DIR$/vendor/nelmio/cors-bundle" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="5.5.0" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
   <component name="PhpUnit">
     <phpunit_settings>
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/phpunit.xml.dist" custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" use_configuration_file="true" />
