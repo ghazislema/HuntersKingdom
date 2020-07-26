@@ -14,7 +14,7 @@ class buyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('titre')->add('adresse')->add('description')->add('categorie')
-            ->add('deadline')->add('datePublication')->add('etat');
+            ->add('deadline')->add('datepublication')->add('etat');
     }/**
  * {@inheritdoc}
  */

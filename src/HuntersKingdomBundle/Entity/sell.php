@@ -35,18 +35,18 @@ class sell
      */
     private $adresse;
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="deadline", type="datetime")
+     * @ORM\Column(name="deadline", type="string")
      */
     private $deadline;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="datePublication", type="datetime")
+     * @ORM\Column(name="datepublication", type="string")
      */
-    private $datePublication;
+    private $datepublication;
 
     /**
      * @var string
@@ -118,7 +118,7 @@ class sell
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
     public function getDeadline()
     {
@@ -126,7 +126,7 @@ class sell
     }
 
     /**
-     * @param \DateTime $deadline
+     * @param string $deadline
      */
     public function setDeadline($deadline)
     {
@@ -134,19 +134,19 @@ class sell
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
-    public function getDatePublication()
+    public function getDatepublication()
     {
-        return $this->datePublication;
+        return $this->datepublication;
     }
 
     /**
-     * @param \DateTime $datePublication
+     * @param string $datepublication
      */
-    public function setDatePublication($datePublication)
+    public function setDatepublication($datepublication)
     {
-        $this->datePublication = $datePublication;
+        $this->datePublication = $datepublication;
     }
 
     /**

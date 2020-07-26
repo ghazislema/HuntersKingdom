@@ -53,7 +53,7 @@ class offre
      *
      * @ORM\Column(name="datePublication", type="datetime")
      */
-    private $datePublication;
+    private $datepublication;
 
     /**
      * @var string
