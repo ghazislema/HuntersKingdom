@@ -46,19 +46,6 @@ class threaddetailController extends Controller
     }
 
     /**
-     * Finds and displays a threaddetail entity.
-     *
-     * @Route("/{id}", name="threaddetail_show")
-     * @Method("GET")
-     */
-    public function showAction(threaddetail $threaddetail)
-    {
-        $data=$this->get('jms_serializer')->serialize($threaddetail,'json');
-        $response=new Response($data);
-        return $response;
-    }
-
-    /**
      * Displays a form to edit an existing threaddetail entity.
      *
      * @Route("/{id}/edit", name="threaddetail_edit")
@@ -91,18 +78,47 @@ class threaddetailController extends Controller
     }
 
     /**
-     * retrieve  details entitie of a thread
+     * retrieve  details entitie of a comment of a certain thread
      *
      * @Route("/api/threadcomments/{id}", name="threadetail_getindex")
      * @Method("GET")
      */
-    public function findThreadsToValidate(Request $request)
+    public function findCommentByThreadId(Request $request)
     {
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $threads = $em->getRepository('HuntersKingdomBundle:threaddetail')->findBy(['threadid' => $id ]);
         $data=$this->get('jms_serializer')->serialize($threads,'json');
         $response = new Response($data);
+        return $response;
+    }
+
+    /**
+     * get comment by id
+     *
+     * @Route("/api/comment/{id}", name="threadetail_getid")
+     * @Method("GET")
+     */
+    public function findThreadDetailById(Request $request)
+    {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $threads = $em->getRepository('HuntersKingdomBundle:threaddetail')->findBy(['id' => $id ]);
+        $data=$this->get('jms_serializer')->serialize($threads,'json');
+        $response = new Response($data);
+        return $response;
+    }
+
+    /**
+     * Finds and displays a thread entity.
+     *
+     * @Route("/api/showcomment/{id}", name="Tcomment_show")
+     * @Method("GET")
+     */
+    public function showAction(threaddetail $threaddetail)
+    {
+        $data=$this->get('jms_serializer')->serialize($threaddetail,'json');
+        $response=new Response($data);
         return $response;
     }
 
