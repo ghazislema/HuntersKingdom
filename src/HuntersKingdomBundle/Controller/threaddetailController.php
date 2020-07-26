@@ -1,7 +1,7 @@
 <?php
 
 namespace HuntersKingdomBundle\Controller;
-
+use FOS\RestBundle\View\View;
 use HuntersKingdomBundle\Entity\thread;
 use HuntersKingdomBundle\Entity\threaddetail;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
