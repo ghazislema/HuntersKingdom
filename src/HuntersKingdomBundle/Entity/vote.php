@@ -35,6 +35,14 @@ class vote
      */
     private $threadid;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vote", type="string", length=255)
+     */
+    private $vote;
+
+
 
     /**
      * Get id
@@ -68,6 +76,30 @@ class vote
     public function getUserid()
     {
         return $this->userid;
+    }
+
+    /**
+     * Set userid
+     *
+     * @param string $vote
+     *
+     * @return vote
+     */
+    public function setVote($vote)
+    {
+        $this->vote = $vote;
+
+        return $this;
+    }
+
+    /**
+     * Get Vote
+     *
+     * @return string
+     */
+    public function getVote()
+    {
+        return $this->vote;
     }
 
     /**

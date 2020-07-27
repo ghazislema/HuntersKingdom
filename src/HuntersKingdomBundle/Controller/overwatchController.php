@@ -4,6 +4,7 @@ namespace HuntersKingdomBundle\Controller;
 
 use FOS\RestBundle\View\View;
 use HuntersKingdomBundle\Entity\overwatch;
+use HuntersKingdomBundle\Entity\vote;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -69,43 +70,7 @@ class overwatchController extends Controller
         return new View("Report Added Successfully", Response::HTTP_OK);
     }
 
-    /**
-     * Finds and displays a overwatch entity.
-     *
-     * @Route("/{id}", name="overwatch_show")
-     * @Method("GET")
-     */
-    public function showAction(overwatch $overwatch)
-    {
-        $data=$this->get('jms_serializer')->serialize($overwatch,'json');
-        $response=new Response($data);
-        return $response;
-    }
 
-    /**
-     * Displays a form to edit an existing overwatch entity.
-     *
-     * @Route("/{id}/edit", name="overwatch_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, overwatch $overwatch)
-    {
-        $deleteForm = $this->createDeleteForm($overwatch);
-        $editForm = $this->createForm('HuntersKingdomBundle\Form\overwatchType', $overwatch);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('overwatch_edit', array('id' => $overwatch->getId()));
-        }
-
-        return $this->render('overwatch/edit.html.twig', array(
-            'overwatch' => $overwatch,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
 
     /**
      * Deletes a overwatch entity.
@@ -177,6 +142,72 @@ class overwatchController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $threads = $em->getRepository('HuntersKingdomBundle:report')->findAll();$data=$this->get('jms_serializer')->serialize($threads,'json');
+        $response = new Response($data);
+        return $response;
+    }
+
+    /**
+     * get an report entity.
+     *
+     * @Route("/api/checkvote/{subjid}/{userid}", name="checkvote_api")
+     * @Method({"GET"})
+     */
+    public function checkVote(Request $request)
+    {
+        $subjid = $request->get('subjid');
+        $userid = $request->get('userid');
+        $em=$this->getDoctrine()->getManager();
+        $p=$em->getRepository('HuntersKingdomBundle:vote')->findBy(['threadid' => $subjid,'userid' => $userid ]);
+        $data=$this->get('jms_serializer')->serialize($p,'json');
+        $response = new Response($data);
+        return $response;
+    }
+
+    /**
+     * add vote ent
+     *
+     * @Route("/api/addvote/new", name="newvote_inx")
+     * @Method({"POST"})
+     */
+    public function addVote(Request $request)
+    {
+        $data = $request->getContent();
+        $vote = $this->get('jms_serializer') ->deserialize($data, 'HuntersKingdomBundle\Entity\vote', 'json');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($vote);
+        $em->flush();
+        return new View("Vote Added Successfully", Response::HTTP_OK);
+    }
+
+    /**
+     * add vote ent
+     *
+     * @Route("/api/updatevote/{subjid}/{userid}/{votel}", name="updatevote_newx")
+     * @Method({"POST"})
+     */
+    public function updateVote(Request $request)
+    {
+        $subjid = $request->get('subjid');
+        $userid = $request->get('userid');
+        $em=$this->getDoctrine()->getManager();
+        $vote=$em->getRepository('HuntersKingdomBundle:vote')->findBy(['threadid' => $subjid,'userid' => $userid ]);
+        $vote[0]->setVote($request->get('votel'));
+        $em->persist($vote[0]);
+        $em->flush();
+        return new View("Vote updated Successfully", Response::HTTP_OK);;
+    }
+
+    /**
+     * Lists all votes entities.
+     *
+     * @Route("/api/votes/all", name="voteadd")
+     * @Method("GET")
+     */
+    public function findAllVotes()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $threads = $em->getRepository('HuntersKingdomBundle:vote')->findAll();
+        $data=$this->get('jms_serializer')->serialize($threads,'json');
         $response = new Response($data);
         return $response;
     }

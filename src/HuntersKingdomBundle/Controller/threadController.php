@@ -126,6 +126,33 @@ class threadController extends Controller
         return new View("Thread validated Successfully", Response::HTTP_OK);
     }
 
+    /**
+     * add vote ent
+     *
+     * @Route("/api/updatelikes/{threadid}/{votel}", name="updatelikes")
+     * @Method({"POST"})
+     */
+    public function updateLikes(Request $request)
+    {
+        $subjid = $request->get('threadid');
+        $like = $request->get('votel');
+        $em=$this->getDoctrine()->getManager();
+        $thread=$em->getRepository('HuntersKingdomBundle:thread')->find($subjid);
+        if ($like == 'true') {
+            $nb = (int) $thread->getUpvote();
+            $nb = $nb +1;
+            $thread->setUpvote($nb);
+        }
+        else {
+            $nb = (int) $thread->getUpvote();
+            $nb = $nb -1;
+            $thread->setUpvote($nb);
+        }
+        $em->persist($thread);
+        $em->flush();
+        return new View("Thread updated Successfully", Response::HTTP_OK);;
+    }
+
 
 
 
